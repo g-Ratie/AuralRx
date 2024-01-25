@@ -1,0 +1,21 @@
+name: Lint and TypeCheck
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run biome
+        run: biome ci .
+      - name: Run typecheck
+        run: pnpm typecheck
