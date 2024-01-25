@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "pnpm run dev:client & pnpm run dev:hcm",
+    "dev:client": "next dev",
+    "dev:hcm": "hcm 'src/**/*.module.css' -w",
     "build": "next build",
     "start": "next start",
     "lint": "biome lint ./src/",
@@ -26,8 +28,10 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "happy-css-modules": "^2.1.2",
     "husky": "^8.0.0",
     "lint-staged": "^15.2.0",
+    "postcss": "^8.4.33",
     "typescript": "^5"
   },
   "lint-staged": {
