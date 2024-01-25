@@ -10,7 +10,7 @@
       "nursery": {
         "noUnusedImports": "warn"
       }
-    },
+    }
   },
   "formatter": {
     "enabled": true,
