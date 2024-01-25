@@ -1,16 +1,16 @@
-import * as v from 'valibot'
+import { z } from 'zod'
 
-const SPOTIFY_CLIENT_ID = v.parse(v.string(), process.env.SPOTIFY_CLIENT_ID)
-const SPOTIFY_CLIENT_SECRET = v.parse(v.string(), process.env.SPOTIFY_CLIENT_SECRET)
-const GEMINI_API_KEY = v.parse(v.string([v.startsWith('AI')]), process.env.GEMINI_API_KEY)
-const CHATGPT_API_KEY = v.parse(v.string(), process.env.CHATGPT_API_KEY)
-const CHATGPT_ENDPOINT = v.parse(v.string([v.url()]), process.env.CHATGPT_ENDPOINT)
-const GOOGLEFIT_CLIENT_ID = v.parse(
-  v.string([v.endsWith('.apps.googleusercontent.com')]),
-  process.env.GOOGLEFIT_CLIENT_ID,
-)
-const GOOGLEFIT_CLIENT_SECRET = v.parse(v.string(), process.env.GOOGLEFIT_CLIENT_SECRET)
-const REDIRECT_URI = v.parse(v.string([v.url()]), process.env.REDIRECT_URI)
+const SPOTIFY_CLIENT_ID = z.string().parse(process.env.SPOTIFY_CLIENT_ID)
+const SPOTIFY_CLIENT_SECRET = z.string().parse(process.env.SPOTIFY_CLIENT_SECRET)
+const GEMINI_API_KEY = z.string().startsWith('AI').parse(process.env.GEMINI_API_KEY)
+const CHATGPT_API_KEY = z.string().parse(process.env.CHATGPT_API_KEY)
+const CHATGPT_ENDPOINT = z.string().url().parse(process.env.CHATGPT_ENDPOINT)
+const GOOGLEFIT_CLIENT_ID = z
+  .string()
+  .endsWith('apps.googleusercontent.com')
+  .parse(process.env.GOOGLEFIT_CLIENT_ID)
+const GOOGLEFIT_CLIENT_SECRET = z.string().parse(process.env.GOOGLEFIT_CLIENT_SECRET)
+const REDIRECT_URI = z.string().url().parse(process.env.REDIRECT_URI)
 
 export {
   CHATGPT_API_KEY,
