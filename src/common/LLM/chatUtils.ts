@@ -6,25 +6,25 @@ import { geminiModel } from './geminiModel'
 import { song_genre } from './promptTemplate'
 
 const recommendationSchema = z.object({
-  seed_genres: z
+  seedGenres: z
     .string()
     .array()
     .describe(
       `指定されたジャンルに基づいてレコメンデーションを行うためのジャンル。利用可能なジャンルのセット\n${song_genre}\nからカンマ区切りで最大5つまで指定可能。`,
     ),
-  target_energy: z
+  targetEnergy: z
     .number()
     .min(0)
     .max(1)
     .describe('曲のエネルギーを示す指標, 0から1の範囲で指定し, この値に近い曲が選択される'),
-  target_instrumentalness: z
+  targetInstrumentalness: z
     .number()
     .min(0)
     .max(1)
     .describe(
       '曲がインストゥルメンタルである可能性を示す指標, 0から1の範囲で指定し, この値に近い曲が選択される',
     ),
-  target_valence: z
+  targetValence: z
     .number()
     .min(0)
     .max(1)
@@ -33,7 +33,6 @@ const recommendationSchema = z.object({
 type RecommendationParams = z.infer<typeof recommendationSchema>
 
 export const recomendSongParameter = async (): Promise<RecommendationParams> => {
-  const songGenreSchema = z.enum(song_genre as [string, ...string[]])
   const parser = StructuredOutputParser.fromZodSchema(recommendationSchema)
   const chain = RunnableSequence.from([
     //TODO: データにしたらプロンプトの表現の仕方を変える
@@ -49,8 +48,8 @@ export const recomendSongParameter = async (): Promise<RecommendationParams> => 
     format_parser: parser.getFormatInstructions(),
   })
   //
-  const filteredSeedGenres = result.seed_genres.filter((genre) => song_genre.includes(genre))
-  result.seed_genres = filteredSeedGenres
+  const filteredSeedGenres = result.seedGenres.filter((genre) => song_genre.includes(genre))
+  result.seedGenres = filteredSeedGenres
 
   return result
 }
