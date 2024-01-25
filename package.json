@@ -9,6 +9,7 @@
     "lint": "biome lint ./src/",
     "lint:fix": "biome lint --apply ./src/",
     "format": "biome format --write ./src/",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky install"
   },
   "dependencies": {
