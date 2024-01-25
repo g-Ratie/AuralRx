@@ -8,6 +8,9 @@ dependencies:
   '@googleapis/fitness':
     specifier: ^2.0.5
     version: 2.0.5
+  '@spotify/web-api-ts-sdk':
+    specifier: ^1.2.0
+    version: 1.2.0
   next:
     specifier: 14.1.0
     version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -225,6 +228,10 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@spotify/web-api-ts-sdk@1.2.0:
+    resolution: {integrity: sha512-JUaebva3Ohwo5I5tuTqyW/FKGOMbb40YevJMySAOINRxP7qQ/AMjBzfJx0zeO6yS+wAPfQSoGNsZaUggHw8vsA==}
+    dev: false
 
   /@swc/helpers@0.5.2:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
