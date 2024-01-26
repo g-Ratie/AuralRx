@@ -40,5 +40,10 @@
       "lineWidth": 100,
       "quoteProperties": "asNeeded"
     }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
   }
 }
