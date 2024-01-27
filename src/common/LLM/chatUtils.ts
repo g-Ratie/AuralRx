@@ -32,7 +32,7 @@ const recommendationSchema = z.object({
 })
 type RecommendationParams = z.infer<typeof recommendationSchema>
 
-export const recomendSongParameter = async (): Promise<RecommendationParams> => {
+export const recomendSongParameter = async (input: string): Promise<RecommendationParams> => {
   const parser = StructuredOutputParser.fromZodSchema(recommendationSchema)
   const chain = RunnableSequence.from([
     //TODO: データにしたらプロンプトの表現の仕方を変える
@@ -44,7 +44,7 @@ export const recomendSongParameter = async (): Promise<RecommendationParams> => 
   ])
   const result = await chain.invoke({
     //TODO: ヘルスケアデータに差し替え(場合によってはヘルスケアデータ->説明文の処理が必要？)
-    explain: 'ユーザーはお昼ごはんを食べています',
+    explain: input,
     format_parser: parser.getFormatInstructions(),
   })
   //
