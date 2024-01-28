@@ -25,7 +25,7 @@ const handler = NextAuth({
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
-          scope: generateScopes(googleScopes, 'https://www.googleapis.com/auth/'),
+          scope: generateScopes(googleScopes, 'https://www.googleapis.com/auth/', true),
         },
       },
     }),

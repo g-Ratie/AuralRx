@@ -1,3 +1,5 @@
-export const generateScopes = (scopes: string[], prefix?: string): string => {
-  return scopes.map((scope) => `${prefix ?? ''}${scope}`).join(' ')
+export const generateScopes = (scopes: string[], prefix = '', needOpenId = false): string => {
+  const openId = needOpenId ? ['openid'] : []
+  const scopesWithPrefix = scopes.map((scope) => `${prefix}${scope}`)
+  return [...openId, ...scopesWithPrefix].join(' ')
 }
