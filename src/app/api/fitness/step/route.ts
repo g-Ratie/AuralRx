@@ -8,6 +8,6 @@ export async function GET(req: NextRequest) {
     return accessTokenOrError
   }
 
-  const res = NextResponse.json({ message: await getStepCount(accessTokenOrError) })
+  const res = NextResponse.json(await getStepCount(accessTokenOrError))
   return res
 }

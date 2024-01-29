@@ -7,6 +7,6 @@ export async function GET(req: NextRequest) {
   if (accessTokenOrError instanceof NextResponse) {
     return accessTokenOrError
   }
-  const res = NextResponse.json({ res: await getHeartRate(accessTokenOrError) })
+  const res = NextResponse.json(await getHeartRate(accessTokenOrError))
   return res
 }

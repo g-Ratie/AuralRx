@@ -8,6 +8,6 @@ export async function GET(req: NextRequest) {
     return accessTokenOrError
   }
 
-  const res = NextResponse.json({ message: await getFitnessData(accessTokenOrError) })
+  const res = NextResponse.json(await getFitnessData(accessTokenOrError))
   return res
 }
