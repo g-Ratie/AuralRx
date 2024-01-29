@@ -54,7 +54,7 @@ export const getMockStep = async () => {
 
 export const getMockFitnessData = async () => {
   return {
-    heart: await getMockHeartRate(),
+    heartrate: await getMockHeartRate(),
     step: await getMockStep(),
   }
 }
