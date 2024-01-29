@@ -35,16 +35,13 @@ export const getStepCount = async (accessToken: string) => {
 }
 
 export const getHeartRate = async (accessToken: string) => {
-  // const { from, to } = getTodayTimestamps()
+  const { from, to } = getTodayTimestamps()
   const auth = new google.auth.OAuth2({
     clientId: GOOGLEFIT_CLIENT_ID,
     clientSecret: GOOGLEFIT_CLIENT_SECRET,
   })
   auth.setCredentials({ access_token: accessToken })
   const fitness = google.fitness({ auth: auth, version: 'v1' })
-  //TODO: デモデータ、変える
-  const from = Date.parse('2021-11-11') * 1e6
-  const to = Date.parse('2021-11-12') * 1e6
   try {
     const dataset = await fitness.users.dataSources.datasets.get({
       userId: 'me',
