@@ -1,16 +1,17 @@
+import dayjs from 'dayjs'
+
 export const getMockHeartRate = async () => {
   const generateMockData = () => {
     const dataPoints = []
-    const today = new Date()
-    const startTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8, 0, 0) // 今日の8時
-    const endTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0, 0) // 今日の12時
+    const today = dayjs()
+    const startTime = today.hour(8).minute(0).second(0)
+    const endTime = today.hour(12).minute(0).second(0)
 
-    for (let time = new Date(startTime); time < endTime; time.setMinutes(time.getMinutes() + 15)) {
-      // 60から170の間のランダムな心拍数
+    for (let time = dayjs(startTime); time.isBefore(endTime); time = time.add(15, 'minute')) {
       const value = Math.floor(Math.random() * (170 - 60 + 1) + 60)
       dataPoints.push({
-        startDate: new Date(time).toISOString(),
-        endDate: new Date(time).toISOString(),
+        startDate: time.format(),
+        endDate: time.format(),
         value: value,
       })
     }
@@ -21,34 +22,31 @@ export const getMockHeartRate = async () => {
     }
   }
 
-  // モックデータを使用
   return generateMockData()
 }
 
 export const getMockStep = async () => {
   const generateMockData = () => {
     const dataPoints = []
-    const today = new Date()
-    const startTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8, 0, 0) // 今日の8時
-    const endTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0, 0) // 今日の12時
+    const today = dayjs()
+    const startTime = today.hour(8).minute(0).second(0)
+    const endTime = today.hour(12).minute(0).second(0)
 
-    for (let time = new Date(startTime); time < endTime; time.setMinutes(time.getMinutes() + 15)) {
-      // 100から2000の間のランダムな歩数
+    for (let time = dayjs(startTime); time.isBefore(endTime); time = time.add(15, 'minute')) {
       const value = Math.floor(Math.random() * (5000 - 100 + 1) + 100)
       dataPoints.push({
-        startDate: new Date(time).toISOString(),
-        endDate: new Date(time).toISOString(),
+        startDate: time.format(),
+        endDate: time.format(),
         value: value,
       })
     }
 
     return {
-      dataTypeName: 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm',
+      dataTypeName: 'derived:com.google.step_count.delta:com.google.android.gms:merge_step_deltas',
       points: dataPoints,
     }
   }
 
-  // モックデータを使用
   return generateMockData()
 }
 
