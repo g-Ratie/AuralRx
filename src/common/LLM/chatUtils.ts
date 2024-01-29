@@ -3,37 +3,14 @@ import { PromptTemplate } from 'langchain/prompts'
 import { RunnableSequence } from 'langchain/runnables'
 import { z } from 'zod'
 import { geminiModel } from './geminiModel'
+import { ExtendedRecommendationParams, recommendationSchemaWithSeedGenres } from './outputSchema'
 import { song_genre } from './promptTemplate'
 
-const recommendationSchema = z.object({
-  seedGenres: z
-    .string()
-    .array()
-    .describe(
-      `指定されたジャンルに基づいてレコメンデーションを行うためのジャンル。利用可能なジャンルのセット\n${song_genre}\nからカンマ区切りで最大5つまで指定可能。`,
-    ),
-  targetEnergy: z
-    .number()
-    .min(0)
-    .max(1)
-    .describe('曲のエネルギーを示す指標, 0から1の範囲で指定し, この値に近い曲が選択される'),
-  targetInstrumentalness: z
-    .number()
-    .min(0)
-    .max(1)
-    .describe(
-      '曲がインストゥルメンタルである可能性を示す指標, 0から1の範囲で指定し, この値に近い曲が選択される',
-    ),
-  targetValence: z
-    .number()
-    .min(0)
-    .max(1)
-    .describe('曲のポジティブさを示す指標, 0から1の範囲で指定し, この値に近い曲が選択される'),
-})
-type RecommendationParams = z.infer<typeof recommendationSchema>
-
-export const recomendSongParameter = async (input: string): Promise<RecommendationParams> => {
-  const parser = StructuredOutputParser.fromZodSchema(recommendationSchema)
+export const recomendSongParameter = async (
+  input: string,
+  seedTrack: string | null,
+): Promise<ExtendedRecommendationParams> => {
+  const parser = StructuredOutputParser.fromZodSchema(recommendationSchemaWithSeedGenres)
   const chain = RunnableSequence.from([
     //TODO: データにしたらプロンプトの表現の仕方を変える
     PromptTemplate.fromTemplate(
@@ -47,9 +24,11 @@ export const recomendSongParameter = async (input: string): Promise<Recommendati
     explain: input,
     format_parser: parser.getFormatInstructions(),
   })
-  //
-  const filteredSeedGenres = result.seedGenres.filter((genre) => song_genre.includes(genre))
-  result.seedGenres = filteredSeedGenres
+  //ユーザーが曲を指定した場合は、ジャンルの指定を削除し、シードに指定した曲を追加する
+  if (seedTrack) {
+    const { seedGenres, ...withoutSeedGenres } = result
+    return { ...withoutSeedGenres, seedTracks: [seedTrack] }
+  }
 
   return result
 }
