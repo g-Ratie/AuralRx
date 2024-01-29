@@ -20,6 +20,7 @@ declare module 'next-auth' {
       accessToken: string | undefined
       refreshToken: string | undefined
     } & DefaultSession['user']
+    provider: string | undefined
   }
 }
 
@@ -27,6 +28,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string | undefined
     refreshToken: string | undefined
+    provider: string | undefined
   }
 }
 
@@ -36,7 +38,12 @@ const googleScopes = [
   'fitness.activity.read',
   'fitness.location.read',
 ]
-const spotifyScopes = ['playlist-modify-public', 'playlist-modify-private']
+const spotifyScopes = [
+  'playlist-modify-public',
+  'playlist-modify-private',
+  'user-read-playback-state',
+  'user-modify-playback-state',
+]
 
 export const authOptions: NextAuthOptions = {
   secret: NEXTAUTH_SECRET,
@@ -66,19 +73,17 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt: async ({ token, account }) => {
-      if (account?.provider === 'google') {
+      if (account?.provider !== undefined) {
         token.accessToken = account.access_token
         token.refreshToken = account.refresh_token
-      }
-      if (account?.provider === 'spotify') {
-        token.accessToken = account.access_token
-        token.refreshToken = account.refresh_token
+        token.provider = account.provider
       }
       return token
     },
     session: async ({ session, token }) => {
       session.user.accessToken = token.accessToken
       session.user.refreshToken = token.refreshToken
+      session.provider = token.provider
       return session
     },
   },
