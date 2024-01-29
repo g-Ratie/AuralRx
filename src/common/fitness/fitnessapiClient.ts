@@ -1,0 +1,60 @@
+import { GOOGLEFIT_CLIENT_ID, GOOGLEFIT_CLIENT_SECRET } from '@/service/envValues'
+import { google } from 'googleapis'
+import { aggregateData } from './aggregateFitnessData'
+
+const getTodayTimestamps = () => {
+  const now = new Date()
+  const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, -1)
+  return {
+    from: startOfDay.getTime() * 1e6, // ミリ秒→ナノ秒に変換
+    to: endOfDay.getTime() * 1e6,
+  }
+}
+
+export const getStepCount = async (accessToken: string) => {
+  const { from, to } = getTodayTimestamps()
+  const auth = new google.auth.OAuth2({
+    clientId: GOOGLEFIT_CLIENT_ID,
+    clientSecret: GOOGLEFIT_CLIENT_SECRET,
+  })
+  auth.setCredentials({ access_token: accessToken })
+  const fitness = google.fitness({ auth: auth, version: 'v1' })
+  try {
+    const dataset = await fitness.users.dataSources.datasets.get({
+      userId: 'me',
+      dataSourceId: 'derived:com.google.step_count.delta:com.google.android.gms:estimated_steps',
+      datasetId: `${from}-${to}`,
+    })
+
+    return aggregateData(dataset.data, 'intVal')
+  } catch (error) {
+    console.error('Error fetching step count:', error)
+    throw error
+  }
+}
+
+export const getHeartRate = async (accessToken: string) => {
+  // const { from, to } = getTodayTimestamps()
+  const auth = new google.auth.OAuth2({
+    clientId: GOOGLEFIT_CLIENT_ID,
+    clientSecret: GOOGLEFIT_CLIENT_SECRET,
+  })
+  auth.setCredentials({ access_token: accessToken })
+  const fitness = google.fitness({ auth: auth, version: 'v1' })
+  //TODO: デモデータ、変える
+  const from = Date.parse('2021-11-11') * 1e6
+  const to = Date.parse('2021-11-12') * 1e6
+  try {
+    const dataset = await fitness.users.dataSources.datasets.get({
+      userId: 'me',
+      dataSourceId: 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm',
+      //なの
+      datasetId: `${from}-${to}`,
+    })
+    return aggregateData(dataset.data, 'fpVal')
+  } catch (error) {
+    console.error('Error fetching step count:', error)
+    throw error
+  }
+}
