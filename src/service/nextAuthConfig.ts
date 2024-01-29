@@ -38,7 +38,12 @@ const googleScopes = [
   'fitness.activity.read',
   'fitness.location.read',
 ]
-const spotifyScopes = ['playlist-modify-public', 'playlist-modify-private']
+const spotifyScopes = [
+  'playlist-modify-public',
+  'playlist-modify-private',
+  'user-read-playback-state',
+  'user-modify-playback-state',
+]
 
 export const authOptions: NextAuthOptions = {
   secret: NEXTAUTH_SECRET,
