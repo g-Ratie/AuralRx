@@ -1,6 +1,6 @@
 import { GOOGLEFIT_CLIENT_ID, GOOGLEFIT_CLIENT_SECRET } from '@/service/envValues'
 import { google } from 'googleapis'
-import { aggregateData } from './aggregateFitnessData'
+import { aggregateData, countingHourlyAverage, countingHourlySum } from './aggregateFitnessData'
 
 const getTodayTimestamps = () => {
   const now = new Date()
@@ -55,6 +55,31 @@ export const getHeartRate = async (accessToken: string) => {
     return aggregateData(dataset.data, 'fpVal')
   } catch (error) {
     console.error('Error fetching step count:', error)
+    throw error
+  }
+}
+
+export const getFitnessData = async (accessToken: string) => {
+  const auth = new google.auth.OAuth2({
+    clientId: GOOGLEFIT_CLIENT_ID,
+    clientSecret: GOOGLEFIT_CLIENT_SECRET,
+  })
+
+  auth.setCredentials({ access_token: accessToken })
+
+  try {
+    const stepData = await getStepCount(accessToken)
+    const heartRateData = await getHeartRate(accessToken)
+
+    if (stepData === null || heartRateData === null) {
+      return null
+    }
+    return {
+      step: countingHourlySum(stepData),
+      heartrate: countingHourlyAverage(heartRateData),
+    }
+  } catch (error) {
+    console.error('Error fetching fitness data:', error)
     throw error
   }
 }
