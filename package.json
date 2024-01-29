@@ -17,6 +17,7 @@
   "dependencies": {
     "@googleapis/fitness": "^2.0.5",
     "@spotify/web-api-ts-sdk": "^1.2.0",
+    "googleapis": "^131.0.0",
     "langchain": "^0.1.7",
     "next": "14.1.0",
     "next-auth": "^4.24.5",
