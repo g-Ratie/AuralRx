@@ -1,0 +1,22 @@
+.button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  outline: 0;
+  border: 0;
+  border-radius: 8px;
+  width: fit-content;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: filter 0.1s ease-in-out;
+}
+
+.button:hover,
+.button:focus-visible {
+  filter: brightness(0.9);
+}
+
+.button:active {
+  filter: brightness(0.8);
+}
