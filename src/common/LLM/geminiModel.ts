@@ -1,10 +1,18 @@
 import { GEMINI_API_KEY } from '@/service/envValues'
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
 
+//レコメンド用の通常モデル
 export const geminiModel = new ChatGoogleGenerativeAI({
   modelName: 'gemini-pro',
-  maxOutputTokens: 2048,
+  maxOutputTokens: 8192,
   temperature: 0,
-  topP: 0.1,
+  apiKey: GEMINI_API_KEY,
+})
+
+//柔軟な思考ができるように、ランダム性を持たせたモデル
+export const geminiModelForAnalysis = new ChatGoogleGenerativeAI({
+  modelName: 'gemini-pro',
+  maxOutputTokens: 8192,
+  temperature: 0.5,
   apiKey: GEMINI_API_KEY,
 })
