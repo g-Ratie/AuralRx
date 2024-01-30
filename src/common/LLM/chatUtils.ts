@@ -4,7 +4,7 @@ import { RunnableSequence } from 'langchain/runnables'
 import { geminiModel } from './geminiModel'
 import { ExtendedRecommendationParams, recommendationSchemaWithSeedGenres } from './outputSchema'
 
-export const recomendSongParameter = async (
+export const recommendSongParameter = async (
   input: string,
   seedTrack: string | null,
 ): Promise<ExtendedRecommendationParams> => {

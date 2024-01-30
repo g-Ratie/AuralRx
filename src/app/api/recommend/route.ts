@@ -1,4 +1,4 @@
-import { recomendSongParameter } from '@/common/LLM/chatUtils'
+import { recommendSongParameter } from '@/common/LLM/chatUtils'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
@@ -8,6 +8,6 @@ export async function GET(req: NextRequest) {
   if (input === null) {
     return NextResponse.json({ error: 'input is null' }, { status: 400 })
   }
-  const res = NextResponse.json(await recomendSongParameter(input, seedTrack))
+  const res = NextResponse.json(await recommendSongParameter(input, seedTrack))
   return res
 }
