@@ -37,6 +37,8 @@ const googleScopes = [
   'userinfo.email',
   'fitness.activity.read',
   'fitness.location.read',
+  'fitness.body.read',
+  'fitness.heart_rate.read',
 ]
 const spotifyScopes = [
   'playlist-modify-public',
