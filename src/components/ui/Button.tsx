@@ -14,7 +14,7 @@ type Props = {
 export const Button = ({ Icon, label, style, onClick }: Props) => {
   return (
     <button style={style} onClick={onClick} type="button" className={styles.button}>
-      {Icon !== undefined && <Icon size={32} />}
+      {Icon !== undefined && <Icon size={28} />}
       {label}
     </button>
   )
