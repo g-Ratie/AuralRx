@@ -10,8 +10,6 @@ const GOOGLEFIT_CLIENT_ID = z
   .endsWith('apps.googleusercontent.com')
   .parse(process.env.GOOGLEFIT_CLIENT_ID)
 const GOOGLEFIT_CLIENT_SECRET = z.string().parse(process.env.GOOGLEFIT_CLIENT_SECRET)
-const NEXTAUTH_URL = z.string().url().parse(process.env.NEXTAUTH_URL)
-const NEXTAUTH_SECRET = z.string().parse(process.env.NEXTAUTH_SECRET)
 const REDIRECT_URI = z.string().url().parse(process.env.REDIRECT_URI)
 
 export {
@@ -20,8 +18,6 @@ export {
   GEMINI_API_KEY,
   GOOGLEFIT_CLIENT_ID,
   GOOGLEFIT_CLIENT_SECRET,
-  NEXTAUTH_SECRET,
-  NEXTAUTH_URL,
   REDIRECT_URI,
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
