@@ -46,7 +46,6 @@ export const getHeartRate = async (accessToken: string) => {
     const dataset = await fitness.users.dataSources.datasets.get({
       userId: 'me',
       dataSourceId: 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm',
-      //なの
       datasetId: `${from}-${to}`,
     })
     return aggregateData(dataset.data, 'fpVal')
@@ -68,9 +67,6 @@ export const getFitnessData = async (accessToken: string) => {
     const stepData = await getStepCount(accessToken)
     const heartRateData = await getHeartRate(accessToken)
 
-    if (stepData === null || heartRateData === null) {
-      return null
-    }
     return {
       step: countingHourlySum(stepData),
       heartrate: countingHourlyAverage(heartRateData),

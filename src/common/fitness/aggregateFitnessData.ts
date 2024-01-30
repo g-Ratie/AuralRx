@@ -41,7 +41,10 @@ export const aggregateData = (
   return { dataTypeName, points }
 }
 
-export const countingHourlySum = (data: AggregatedData): { [key: string]: number } => {
+export const countingHourlySum = (
+  data: AggregatedData | null,
+): { [key: string]: number } | null => {
+  if (data === null) return null
   const roundToHour = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())
   }
@@ -65,7 +68,10 @@ export const countingHourlySum = (data: AggregatedData): { [key: string]: number
   return objectResult
 }
 
-export const countingHourlyAverage = (data: AggregatedData): { [key: string]: number } => {
+export const countingHourlyAverage = (
+  data: AggregatedData | null,
+): { [key: string]: number } | null => {
+  if (data === null) return null
   const roundToHour = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())
   }
