@@ -3,7 +3,8 @@ import { authOptions } from './nextAuthConfig'
 
 export const getGoogleAccessToken = async () => {
   const session = await getServerSession(authOptions)
-  return session && session.provider === 'google' && session.user.accessToken
-    ? session.user.accessToken
-    : null
+  if (session?.provider === 'google') {
+    return session.user.accessToken ?? null
+  }
+  return null
 }
