@@ -5,7 +5,7 @@ import { CSSProperties, FC } from 'react'
 import styles from './Button.module.css'
 
 type Props = {
-  Icon?: FC<TablerIconsProps>
+  Icon?: FC<Partial<TablerIconsProps>>
   label: string
   style?: CSSProperties
   onClick?: () => void
