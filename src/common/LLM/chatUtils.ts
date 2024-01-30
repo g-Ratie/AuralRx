@@ -1,10 +1,8 @@
 import { StructuredOutputParser } from 'langchain/output_parsers'
 import { PromptTemplate } from 'langchain/prompts'
 import { RunnableSequence } from 'langchain/runnables'
-import { z } from 'zod'
 import { geminiModel } from './geminiModel'
 import { ExtendedRecommendationParams, recommendationSchemaWithSeedGenres } from './outputSchema'
-import { song_genre } from './promptTemplate'
 
 export const recomendSongParameter = async (
   input: string,
