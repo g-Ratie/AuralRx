@@ -1,8 +1,9 @@
+import dayjs from 'dayjs'
 import { fitness_v1 } from 'googleapis'
 
 type GenericData = {
-  startDate: Date | null
-  endDate: Date | null
+  startDate: string | null
+  endDate: string | null
   value: number | null | undefined
 }
 
@@ -11,13 +12,12 @@ type AggregatedData = {
   points: GenericData[]
 }
 
-const nanosectoDate = (nanosec: string | null | undefined) => {
+const nanosecToDate = (nanosec: string | null | undefined): string | null => {
   if (nanosec === null || nanosec === undefined) return null
-  const date = new Date(parseInt(nanosec) / 1e6)
-  return date
+  const date = dayjs(parseInt(nanosec) / 1e6)
+  return date.format()
 }
 
-// 汎用的なデータ抽出・集約関数
 export const aggregateData = (
   data: fitness_v1.Schema$Dataset,
   valueType: 'intVal' | 'fpVal',
@@ -32,8 +32,8 @@ export const aggregateData = (
   const points = point.map((p) => {
     const { startTimeNanos, endTimeNanos, value } = p
     return {
-      startDate: nanosectoDate(startTimeNanos),
-      endDate: nanosectoDate(endTimeNanos),
+      startDate: nanosecToDate(startTimeNanos),
+      endDate: nanosecToDate(endTimeNanos),
       value: value?.[0] ? value[0][valueType] : null,
     }
   })
@@ -45,18 +45,17 @@ export const countingHourlySum = (
   data: AggregatedData | null,
 ): { [key: string]: number } | null => {
   if (data === null) return null
-  const roundToHour = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())
+  const roundToHour = (dateString: string) => {
+    const date = dayjs(dateString)
+    return date.hour(date.hour()).minute(0).second(0).millisecond(0).format() 
   }
   const result = new Map<string, number>()
 
   for (const point of data.points) {
     if (point.startDate && point.value) {
       const roundedDate = roundToHour(point.startDate)
-      const hourKey = roundedDate.toISOString()
-
-      const currentValue = result.get(hourKey) || 0
-      result.set(hourKey, currentValue + point.value)
+      const currentValue = result.get(roundedDate) || 0
+      result.set(roundedDate, currentValue + point.value)
     }
   }
 
@@ -72,8 +71,9 @@ export const countingHourlyAverage = (
   data: AggregatedData | null,
 ): { [key: string]: number } | null => {
   if (data === null) return null
-  const roundToHour = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())
+  const roundToHour = (dateString: string) => {
+    const date = dayjs(dateString)
+    return date.hour(date.hour()).minute(0).second(0).millisecond(0).format()
   }
 
   const sums = new Map<string, number>()
@@ -82,13 +82,11 @@ export const countingHourlyAverage = (
   for (const point of data.points) {
     if (point.startDate && point.value) {
       const roundedDate = roundToHour(point.startDate)
-      const hourKey = roundedDate.toISOString()
+      const currentSum = sums.get(roundedDate) || 0
+      sums.set(roundedDate, currentSum + point.value)
 
-      const currentSum = sums.get(hourKey) || 0
-      sums.set(hourKey, currentSum + point.value)
-
-      const currentCount = counts.get(hourKey) || 0
-      counts.set(hourKey, currentCount + 1)
+      const currentCount = counts.get(roundedDate) || 0
+      counts.set(roundedDate, currentCount + 1)
     }
   }
 
