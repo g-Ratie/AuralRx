@@ -1,7 +1,12 @@
+'use client'
+
+import { Button } from '@/components/ui/Button'
+import { IconBrandGoogleFit } from '@tabler/icons-react'
+
 export const Fitness = async () => {
   return (
     <div>
-      <button type="button">フィットネスデータを取得</button>
+      <Button label="Fitデータ取得" Icon={IconBrandGoogleFit} />
     </div>
   )
 }

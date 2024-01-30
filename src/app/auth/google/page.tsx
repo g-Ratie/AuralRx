@@ -6,16 +6,20 @@ import { Fitness } from './_components/Fitness'
 import styles from './page.module.css'
 
 const Home = async () => {
-  const session = await getServerSession(authOptions)
-
-  if (session?.provider === 'google') return <Fitness />
-
   const provider = await getProviders()
+  const session = await getServerSession(authOptions)
+  const isAuthorizedByGoogle = session?.provider === 'google'
 
   return (
     <div className={styles.container}>
-      <p>Google連携</p>
-      {provider?.google && <LoginButton loginProvider={provider.google} />}
+      {isAuthorizedByGoogle ? (
+        <Fitness />
+      ) : (
+        <>
+          <p>Google連携</p>
+          {provider?.google && <LoginButton loginProvider={provider.google} />}
+        </>
+      )}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 .layout {
   display: flex;
+  height: 100%;
+  flex: 100% 1 1;
   flex-direction: column;
-  height: 100svh;
   align-items: center;
 }
