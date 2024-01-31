@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
   const searchparams = req.nextUrl.searchParams
   const seedTrack = searchparams.get('seedTrack')
 
-  const analyzeResult = await chatUtils.analyzeHealthData()
+  const analyzeResult = await chatUtils.analyzeHealthDataWithMock()
   const recommendParams = await Promise.all(
     analyzeResult.activity_analysis.map(async (activity) => {
       const recommendResult = await chatUtils.recommendSongParameter(
