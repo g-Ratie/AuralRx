@@ -1,59 +1,61 @@
 import dayjs from 'dayjs'
 import { countingHourlyAverage, countingHourlySum } from './aggregateFitnessData'
 
-export const getMockHeartRate = async () => {
-  const generateMockData = () => {
-    const dataPoints = []
-    const today = dayjs()
-    const startTime = today.hour(8).minute(0).second(0)
-    const endTime = today.hour(12).minute(0).second(0)
+type ActivityType = 'resting' | 'lightExercise' | 'intenseExercise'
 
-    for (let time = dayjs(startTime); time.isBefore(endTime); time = time.add(15, 'minute')) {
-      const value = Math.floor(Math.random() * (170 - 60 + 1) + 60)
-      dataPoints.push({
-        startDate: time.format(),
-        endDate: time.format(),
-        value: value,
-      })
-    }
-
-    return {
-      dataTypeName: 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm',
-      points: dataPoints,
-    }
-  }
-
-  return generateMockData()
+const activityRanges: Record<ActivityType, { heartRate: number[]; steps: number[] }> = {
+  resting: {
+    heartRate: [60, 80],
+    steps: [10, 500],
+  },
+  lightExercise: {
+    heartRate: [80, 120],
+    steps: [1000, 2000],
+  },
+  intenseExercise: {
+    heartRate: [120, 170],
+    steps: [2000, 4000],
+  },
 }
 
-export const getMockStep = async () => {
-  const generateMockData = () => {
-    const dataPoints = []
-    const today = dayjs()
-    const startTime = today.hour(8).minute(0).second(0)
-    const endTime = today.hour(12).minute(0).second(0)
+const activityTypes: ActivityType[] = ['resting', 'lightExercise', 'intenseExercise']
 
-    for (let time = dayjs(startTime); time.isBefore(endTime); time = time.add(15, 'minute')) {
-      const value = Math.floor(Math.random() * (5000 - 100 + 1) + 100)
-      dataPoints.push({
-        startDate: time.format(),
-        endDate: time.format(),
-        value: value,
-      })
-    }
+const generateMockData = (
+  startTime: dayjs.Dayjs,
+  endTime: dayjs.Dayjs,
+  type: 'heartRate' | 'steps',
+) => {
+  const dataPoints = []
+  for (let time = dayjs(startTime); time.isBefore(endTime); time = time.add(15, 'minute')) {
+    // 各データポイントごとに活動タイプをランダムに選択
+    const activityType = activityTypes[Math.floor(Math.random() * activityTypes.length)]
+    const range = activityRanges[activityType][type]
 
-    return {
-      dataTypeName: 'derived:com.google.step_count.delta:com.google.android.gms:merge_step_deltas',
-      points: dataPoints,
-    }
+    const value = Math.floor(Math.random() * (range[1] - range[0] + 1) + range[0])
+    dataPoints.push({
+      startDate: time.format(),
+      endDate: time.format(),
+      value,
+    })
   }
-
-  return generateMockData()
+  return dataPoints
 }
 
-export const getMockFitnessData = async () => {
-  const stepData = await getMockStep()
-  const heartRateData = await getMockHeartRate()
+export const getMockFitnessData = () => {
+  const today = dayjs()
+  const startTime = today.hour(8).minute(0).second(0)
+  const endTime = today.hour(12).minute(0).second(0)
+
+  const heartRateData = {
+    dataTypeName: 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm',
+    points: generateMockData(startTime, endTime, 'heartRate'),
+  }
+
+  const stepData = {
+    dataTypeName: 'derived:com.google.step_count.delta:com.google.android.gms:merge_step_deltas',
+    points: generateMockData(startTime, endTime, 'steps'),
+  }
+
   return {
     heartRate: countingHourlyAverage(heartRateData),
     step: countingHourlySum(stepData),

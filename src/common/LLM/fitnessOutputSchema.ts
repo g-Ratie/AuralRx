@@ -29,3 +29,5 @@ const activityAnalysisSchema = z.object({
 export const fitnessOutputSchema = z.object({
   activity_analysis: z.array(activityAnalysisSchema),
 })
+
+export type FitnessOutput = z.infer<typeof fitnessOutputSchema>
