@@ -18,6 +18,11 @@ const nanosecToDate = (nanosec: string | null | undefined): string | null => {
   return date.format()
 }
 
+const roundToHour = (dateString: string) => {
+  const date = dayjs(dateString)
+  return date.hour(date.hour()).minute(0).second(0).millisecond(0).format()
+}
+
 export const aggregateData = (
   data: fitness_v1.Schema$Dataset,
   valueType: 'intVal' | 'fpVal',
@@ -40,61 +45,40 @@ export const aggregateData = (
 
   return { dataTypeName, points }
 }
-
-export const countingHourlySum = (
+const aggregateByHour = (
   data: AggregatedData | null,
+  process: (dataPoints: GenericData[]) => number,
 ): { [key: string]: number } | null => {
-  if (data === null) return null
-  const roundToHour = (dateString: string) => {
-    const date = dayjs(dateString)
-    return date.hour(date.hour()).minute(0).second(0).millisecond(0).format() 
-  }
-  const result = new Map<string, number>()
+  if (!data) return null
+
+  const result: { [key: string]: number } = {}
+  const groupedByHour: { [key: string]: GenericData[] } = {}
 
   for (const point of data.points) {
-    if (point.startDate && point.value) {
+    if (point.startDate && point.value !== null) {
       const roundedDate = roundToHour(point.startDate)
-      const currentValue = result.get(roundedDate) || 0
-      result.set(roundedDate, currentValue + point.value)
+      if (!groupedByHour[roundedDate]) {
+        groupedByHour[roundedDate] = []
+      }
+      groupedByHour[roundedDate].push(point)
     }
   }
 
-  const objectResult: { [key: string]: number } = {}
-  result.forEach((value, key) => {
-    objectResult[key] = value
-  })
-
-  return objectResult
-}
-
-export const countingHourlyAverage = (
-  data: AggregatedData | null,
-): { [key: string]: number } | null => {
-  if (data === null) return null
-  const roundToHour = (dateString: string) => {
-    const date = dayjs(dateString)
-    return date.hour(date.hour()).minute(0).second(0).millisecond(0).format()
+  for (const hour of Object.keys(groupedByHour)) {
+    result[hour] = process(groupedByHour[hour])
   }
 
-  const sums = new Map<string, number>()
-  const counts = new Map<string, number>()
+  return result
+}
 
-  for (const point of data.points) {
-    if (point.startDate && point.value) {
-      const roundedDate = roundToHour(point.startDate)
-      const currentSum = sums.get(roundedDate) || 0
-      sums.set(roundedDate, currentSum + point.value)
-
-      const currentCount = counts.get(roundedDate) || 0
-      counts.set(roundedDate, currentCount + 1)
-    }
-  }
-
-  const averages: { [key: string]: number } = {}
-  sums.forEach((sum, key) => {
-    const count = counts.get(key) || 1
-    averages[key] = sum / count
+export const countingHourlySum = (data: AggregatedData | null) =>
+  aggregateByHour(data, (dataPoints) => {
+    return dataPoints.reduce((acc, curr) => acc + (curr.value || 0), 0)
   })
 
-  return averages
-}
+export const countingHourlyAverage = (data: AggregatedData | null) =>
+  aggregateByHour(data, (dataPoints) => {
+    if (dataPoints.length === 0) return 0
+    const sum = dataPoints.reduce((acc, curr) => acc + (curr.value || 0), 0)
+    return sum / dataPoints.length
+  })
