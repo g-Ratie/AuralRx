@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { countingHourlyAverage, countingHourlySum } from './aggregateFitnessData'
 
 export const getMockHeartRate = async () => {
   const generateMockData = () => {
@@ -51,8 +52,10 @@ export const getMockStep = async () => {
 }
 
 export const getMockFitnessData = async () => {
+  const stepData = await getMockStep()
+  const heartRateData = await getMockHeartRate()
   return {
-    heartrate: await getMockHeartRate(),
-    step: await getMockStep(),
+    heartRate: countingHourlyAverage(heartRateData),
+    step: countingHourlySum(stepData),
   }
 }
