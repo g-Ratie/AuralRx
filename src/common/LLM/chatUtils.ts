@@ -16,15 +16,13 @@ export const chatUtils = {
   ): Promise<ExtendedRecommendationParams> => {
     const parser = StructuredOutputParser.fromZodSchema(recommendationSchemaWithSeedGenres)
     const chain = RunnableSequence.from([
-      //TODO: データにしたらプロンプトの表現の仕方を変える
       PromptTemplate.fromTemplate(
-        '{format_parser}\n以下の場面を元に、適した曲をレコメンドするためのパラメータを設定し、指定した形式のJSONで返してください.\n{explain}',
+        '{format_parser}\n以下のJSONデータを元に、その場面に適した曲をレコメンドするためのパラメータを設定し、指定した形式のJSONで返してください.\n{explain}',
       ),
       geminiModel,
       parser,
     ])
     const result = await chain.invoke({
-      //TODO: ヘルスケアデータに差し替え(場合によってはヘルスケアデータ->説明文の処理が必要？)
       explain: input,
       format_parser: parser.getFormatInstructions(),
     })

@@ -23,7 +23,7 @@ const activityAnalysisSchema = z.object({
   steps_summary: stepsSummarySchema,
   activity_inference: z
     .string()
-    .describe('推定された活動状況についての考察が50~100字程度で記載されます。'),
+    .describe('データから推定された活動状況についての考察が100字程度で記載されます。'),
 })
 
 export const fitnessOutputSchema = z.object({

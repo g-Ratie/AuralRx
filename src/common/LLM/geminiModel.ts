@@ -13,6 +13,6 @@ export const geminiModel = new ChatGoogleGenerativeAI({
 export const geminiModelForAnalysis = new ChatGoogleGenerativeAI({
   modelName: 'gemini-pro',
   maxOutputTokens: 8192,
-  temperature: 0.5,
+  temperature: 0.6,
   apiKey: GEMINI_API_KEY,
 })
