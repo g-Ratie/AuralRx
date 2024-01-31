@@ -1,14 +1,18 @@
 import { z } from 'zod'
 
-const heartRateSummarySchema = z.object({
-  average: z.number().describe('平均心拍数'),
-  min: z.number().describe('最低心拍数'),
-  max: z.number().describe('最高心拍数'),
-})
+const heartRateSummarySchema = z
+  .object({
+    average: z.number().describe('平均心拍数'),
+    min: z.number().describe('最低心拍数'),
+    max: z.number().describe('最高心拍数'),
+  })
+  .nullable()
 
-const stepsSummarySchema = z.object({
-  total: z.number().describe('総歩数'),
-})
+const stepsSummarySchema = z
+  .object({
+    total: z.number().describe('総歩数'),
+  })
+  .nullable()
 
 const activityAnalysisSchema = z.object({
   start_time: z
