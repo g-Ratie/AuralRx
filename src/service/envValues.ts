@@ -10,6 +10,7 @@ const GOOGLEFIT_CLIENT_ID = z
   .endsWith('apps.googleusercontent.com')
   .parse(process.env.GOOGLEFIT_CLIENT_ID)
 const GOOGLEFIT_CLIENT_SECRET = z.string().parse(process.env.GOOGLEFIT_CLIENT_SECRET)
+const IRON_SESSION_PASSWORD = z.string().min(1).parse(process.env.IRON_SESSION_PASSWORD)
 const REDIRECT_URI = z.string().url().parse(process.env.REDIRECT_URI)
 
 export {
@@ -18,6 +19,7 @@ export {
   GEMINI_API_KEY,
   GOOGLEFIT_CLIENT_ID,
   GOOGLEFIT_CLIENT_SECRET,
+  IRON_SESSION_PASSWORD,
   REDIRECT_URI,
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
