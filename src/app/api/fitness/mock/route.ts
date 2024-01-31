@@ -2,8 +2,8 @@ import { chatUtils } from '@/common/LLM/chatUtils'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-  const searchparams = req.nextUrl.searchParams
-  const seedTrack = searchparams.get('seedTrack')
+  const searchParams = req.nextUrl.searchParams
+  const seedTrack = searchParams.get('seedTrack')
 
   const analyzeResult = await chatUtils.analyzeHealthDataWithMock()
   const recommendParams = await Promise.all(

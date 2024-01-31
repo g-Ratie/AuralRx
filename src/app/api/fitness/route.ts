@@ -7,8 +7,8 @@ export async function GET(req: NextRequest) {
   if (googleAccessToken === null) {
     return NextResponse.json({ error: 'No access token' }, { status: 401 })
   }
-  const searchparams = req.nextUrl.searchParams
-  const seedTrack = searchparams.get('seedTrack')
+  const searchParams = req.nextUrl.searchParams
+  const seedTrack = searchParams.get('seedTrack')
   try {
     const analyzeResult = await chatUtils.analyzeHealthData(googleAccessToken)
     const recommendParams = await Promise.all(
