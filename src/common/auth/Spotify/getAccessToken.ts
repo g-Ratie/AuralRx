@@ -9,6 +9,7 @@ const tokenEndpoint = 'https://accounts.spotify.com/api/token'
 export const getSpotifyAccessToken = async () => {
   const session = await getIronSession<SpotifySession>(cookies(), spotifySessionOptions)
   if (session.expiresAt > Date.now()) return session.accessToken
+  if (session.refreshToken === undefined) return undefined
 
   const params = new URLSearchParams({
     grant_type: 'refresh_token',
