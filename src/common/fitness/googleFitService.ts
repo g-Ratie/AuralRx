@@ -1,4 +1,4 @@
-import { GOOGLEFIT_CLIENT_ID, GOOGLEFIT_CLIENT_SECRET } from '@/service/envValues'
+import { GOOGLEFIT_CLIENT_ID, GOOGLEFIT_CLIENT_SECRET } from '@/common/envValues'
 import { google } from 'googleapis'
 import { aggregateData, countingHourlyAverage, countingHourlySum } from './aggregateFitnessData'
 

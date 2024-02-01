@@ -1,4 +1,4 @@
-import { GEMINI_API_KEY } from '@/service/envValues'
+import { GEMINI_API_KEY } from '@/common/envValues'
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
 
 //レコメンドパラメータ生成用のランダム性を無くしたモデル

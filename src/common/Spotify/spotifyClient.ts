@@ -1,4 +1,4 @@
-import { SPOTIFY_CLIENT_ID } from '@/service/envValues'
+import { SPOTIFY_CLIENT_ID } from '@/common/envValues'
 import { AccessToken, SpotifyApi } from '@spotify/web-api-ts-sdk'
 
 export const createSpotifyClient = (accessToken: string, refreshToken: string): SpotifyApi => {
