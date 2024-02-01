@@ -38,8 +38,5 @@ export default function FetchDataButton({ fitnessData }: { fitnessData: FitnessO
     }
   }
 
-  return (
-    // biome-ignore lint/a11y/useButtonType: <explanation>
-    <Button onClick={handleClick} label="レコメンドを取得" />
-  )
+  return <Button onClick={handleClick} label="レコメンドを取得" />
 }

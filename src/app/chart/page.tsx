@@ -1,14 +1,9 @@
-import { Suspense } from 'react'
-import ChartDemo from './_components/ChartDemo'
+import ChartDemoWithMock from './_components/Mock/ChartDemoWithMock'
 
 export default function Home() {
   return (
     <main>
-      <p>Hello, Mock</p>
-
-      <Suspense fallback={<div>Loading...</div>}>
-        <ChartDemo />
-      </Suspense>
+      <ChartDemoWithMock />
     </main>
   )
 }

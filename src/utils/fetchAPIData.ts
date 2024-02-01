@@ -1,11 +1,10 @@
-// 予め定義されたスキーマやAPIエンドポイントを使用
 import { PostFitnessAPIRequestBody } from '@/app/api/fitness/route'
 import { FitnessOutput, fitnessOutputSchema } from '../common/LLM/fitnessOutputSchema'
 import { extendedRecommendationSchema } from '../common/LLM/recommendOutputSchema'
 
 export async function fetchFitnessDataWithMock() {
   try {
-    const response = await fetch('http://localhost:3000/api/fitness/mock', { method: 'GET' })
+    const response = await fetch('/api/fitness/mock', { method: 'GET' })
     const responseData = await response.json()
     const parsedFitnessData = fitnessOutputSchema.parse(responseData)
     return parsedFitnessData
@@ -14,7 +13,6 @@ export async function fetchFitnessDataWithMock() {
   }
 }
 
-// 推奨データを取得する非同期関数
 export async function fetchRecommendedDataWithMock(
   fitnessData: FitnessOutput,
   seedTrack: string[] | null,
@@ -24,7 +22,7 @@ export async function fetchRecommendedDataWithMock(
       activityAnalysis: fitnessData.activityAnalysis,
       seedTrack: seedTrack,
     }
-    const response = await fetch('http://localhost:3000/api/fitness/mock', {
+    const response = await fetch('/api/fitness/mock', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: { 'Content-Type': 'application/json' },
