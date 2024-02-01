@@ -3,15 +3,13 @@ import { FitnessOutput, fitnessOutputSchema } from '@/common/LLM/fitnessOutputSc
 import { ExtendedRecommendationParams } from '@/common/LLM/recommendOutputSchema'
 import { NextRequest, NextResponse } from 'next/server'
 
-// POSTリクエストのレスポンス型
 export type PostFitnessAPIResponse = {
   recommendParams: ExtendedRecommendationParams[]
 }
 
-//POSTリクエストのリクエストボディ型
 export type PostFitnessAPIRequestBody = {
-  activity_analysis: FitnessOutput['activity_analysis']
-  seedTrack: string[]
+  activityAnalysis: FitnessOutput['activity_analysis']
+  seedTrack: string[] | null
 }
 
 async function handleGet(req: NextRequest): Promise<NextResponse> {
@@ -21,13 +19,14 @@ async function handleGet(req: NextRequest): Promise<NextResponse> {
 
 async function handlePost(req: NextRequest): Promise<NextResponse> {
   const json = await req.json()
-  const parsed = fitnessOutputSchema.parse(json)
+  const parsedJson = fitnessOutputSchema.parse(json.activityAnalysis)
 
   const recommendParams = await Promise.all(
-    parsed.activity_analysis.map(async (activity) => {
+    parsedJson.activity_analysis.map(async (activity) => {
+      const seedTrack = json.seedTrack && json.seedTrack.length > 0 ? json.seedTrack[0] : null
       const recommendResult = await chatUtils.recommendSongParameter(
         JSON.stringify(activity.activity_inference),
-        null,
+        seedTrack,
       )
       return recommendResult
     }),
