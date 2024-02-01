@@ -1,10 +1,10 @@
 import { chatUtils } from '@/common/LLM/chatUtils'
-import { getGoogleAccessToken } from '@/service/getGoogleAccessToken'
+import { getGoogleAccessToken } from '@/common/auth/Google/getAccessToken'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
   const googleAccessToken = await getGoogleAccessToken()
-  if (googleAccessToken === null) {
+  if (googleAccessToken === undefined) {
     return NextResponse.json({ error: 'No access token' }, { status: 401 })
   }
   const searchParams = req.nextUrl.searchParams
