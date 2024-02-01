@@ -11,6 +11,7 @@ import { GoogleSession, googleSessionOptions } from '../ironSessionConfig'
 export const getGoogleAccessToken = async () => {
   const session = await getIronSession<GoogleSession>(cookies(), googleSessionOptions)
   if (session.expiresAt ?? 0 > Date.now()) return session.accessToken
+  if (session.refreshToken === undefined) return undefined
 
   const googleApiClient = new google.auth.OAuth2(
     GOOGLEFIT_CLIENT_ID,
