@@ -3,7 +3,7 @@ import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
 import { Loading } from '@/components/ui/Loading'
 import { fetchFitnessDataWithMock } from '@/utils/fetchAPIData'
 import { useEffect, useState } from 'react'
-import FitnessChart from '../FitnessDataCharts'
+import FitnessChart from '../../../../components/chart/FitnessDataCharts'
 import FetchDataButtonWithMock from './FetchDataButtonWithMock'
 
 export default function ChartDemoWithMock() {

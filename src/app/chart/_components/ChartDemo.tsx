@@ -1,9 +1,9 @@
 'use client'
 import { FitnessOutput, fitnessOutputSchema } from '@/common/LLM/fitnessOutputSchema'
-import { useEffect, useState } from 'react'
-import { Loading } from '../../../components/ui/Loading'
+import { Loading } from '@/components/ui/Loading'
+import { useEffect, useState } from 'React'
+import FitnessChart from '../../../components/chart/FitnessDataCharts'
 import FetchDataButton from './FetchDataButton'
-import FitnessChart from './FitnessDataCharts'
 
 export default function ChartDemo() {
   const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)
