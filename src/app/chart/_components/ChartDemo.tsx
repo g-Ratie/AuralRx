@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import FitnessChart from '../../../components/chart/FitnessDataCharts'
 import FetchDataButton from './FetchDataButton'
 
-export default function ChartDemo() {
+const ChartDemo = () => {
   const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -46,3 +46,5 @@ export default function ChartDemo() {
     </div>
   )
 }
+
+export default ChartDemo

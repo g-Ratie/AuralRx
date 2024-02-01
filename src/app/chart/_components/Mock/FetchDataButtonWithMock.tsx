@@ -3,7 +3,7 @@ import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
 import { Button } from '@/components/ui/Button'
 import { fetchRecommendedDataWithMock } from '@/utils/fetchAPIData'
 
-export default function FetchDataButtonWithMock({ fitnessData }: { fitnessData: FitnessOutput }) {
+const FetchDataButtonWithMock = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
   const handleClick = async () => {
     try {
       const recommendedData = await fetchRecommendedDataWithMock(fitnessData, null)
@@ -15,3 +15,5 @@ export default function FetchDataButtonWithMock({ fitnessData }: { fitnessData: 
 
   return <Button onClick={handleClick} label="レコメンドを取得" />
 }
+
+export default FetchDataButtonWithMock

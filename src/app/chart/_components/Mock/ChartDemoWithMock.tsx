@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import FitnessChart from '../../../../components/chart/FitnessDataCharts'
 import FetchDataButtonWithMock from './FetchDataButtonWithMock'
 
-export default function ChartDemoWithMock() {
+const ChartDemoWithMock = () => {
   const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -39,3 +39,5 @@ export default function ChartDemoWithMock() {
     </div>
   )
 }
+
+export default ChartDemoWithMock

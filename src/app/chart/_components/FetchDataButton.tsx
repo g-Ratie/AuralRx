@@ -5,7 +5,7 @@ import { extendedRecommendationSchema } from '@/common/LLM/recommendOutputSchema
 import { Button } from '@/components/ui/Button'
 import { fetchRecommendedDataWithMock } from '@/utils/fetchAPIData'
 
-export default function FetchDataButton({ fitnessData }: { fitnessData: FitnessOutput }) {
+const FetchDataButton = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
   async function fetchRecommendedData(fitnessData: FitnessOutput, seedTrack: string[] | null) {
     try {
       const requestBody: PostFitnessAPIRequestBody = {
@@ -40,3 +40,5 @@ export default function FetchDataButton({ fitnessData }: { fitnessData: FitnessO
 
   return <Button onClick={handleClick} label="レコメンドを取得" />
 }
+
+export default FetchDataButton
