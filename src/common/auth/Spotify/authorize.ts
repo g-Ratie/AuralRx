@@ -1,13 +1,11 @@
-import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '@/common/envValues'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI } from '@/common/envValues'
 import { SpotifyAuthResponse, spotifyAuthResponseScheme } from './authResponseScheme'
-
-const redirect_uri = 'http://localhost:3000/api/auth/spotify/callback'
 
 export const spotifyAuthorize = async (code: string) => {
   const params = new URLSearchParams({
     grant_type: 'authorization_code',
     code,
-    redirect_uri,
+    SPOTIFY_REDIRECT_URI,
   })
   const buffer = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`, 'utf-8')
   const headers = new Headers({

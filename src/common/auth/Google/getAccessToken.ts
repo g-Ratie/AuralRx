@@ -1,10 +1,12 @@
-import { GOOGLEFIT_CLIENT_ID, GOOGLEFIT_CLIENT_SECRET } from '@/common/envValues'
+import {
+  GOOGLEFIT_CLIENT_ID,
+  GOOGLEFIT_CLIENT_SECRET,
+  GOOGLEFIT_REDIRECT_URI,
+} from '@/common/envValues'
 import { google } from 'googleapis'
 import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { GoogleSession, googleSessionOptions } from '../ironSessionConfig'
-
-const redirect_uri = 'http://localhost:3000/api/auth/google/callback'
 
 export const getGoogleAccessToken = async () => {
   const session = await getIronSession<GoogleSession>(cookies(), googleSessionOptions)
@@ -13,7 +15,7 @@ export const getGoogleAccessToken = async () => {
   const googleApiClient = new google.auth.OAuth2(
     GOOGLEFIT_CLIENT_ID,
     GOOGLEFIT_CLIENT_SECRET,
-    redirect_uri,
+    GOOGLEFIT_REDIRECT_URI,
   )
   const { credentials } = await googleApiClient.refreshAccessToken()
 

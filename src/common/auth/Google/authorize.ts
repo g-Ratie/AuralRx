@@ -1,13 +1,15 @@
-import { GOOGLEFIT_CLIENT_ID, GOOGLEFIT_CLIENT_SECRET } from '@/common/envValues'
+import {
+  GOOGLEFIT_CLIENT_ID,
+  GOOGLEFIT_CLIENT_SECRET,
+  GOOGLEFIT_REDIRECT_URI,
+} from '@/common/envValues'
 import { google } from 'googleapis'
-
-const redirect_uri = 'http://localhost:3000/api/auth/google/callback'
 
 export const googleAuthorize = async (code: string) => {
   const googleApiClient = new google.auth.OAuth2(
     GOOGLEFIT_CLIENT_ID,
     GOOGLEFIT_CLIENT_SECRET,
-    redirect_uri,
+    GOOGLEFIT_REDIRECT_URI,
   )
   const { tokens } = await googleApiClient.getToken(code)
   googleApiClient.setCredentials(tokens)
