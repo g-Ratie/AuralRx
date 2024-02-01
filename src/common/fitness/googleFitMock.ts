@@ -44,7 +44,7 @@ const generateMockData = (
 export const getMockFitnessData = () => {
   const today = dayjs()
   const startTime = today.hour(8).minute(0).second(0)
-  const endTime = today.hour(12).minute(0).second(0)
+  const endTime = today.hour(18).minute(0).second(0)
 
   const heartRateData = {
     dataTypeName: 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm',
