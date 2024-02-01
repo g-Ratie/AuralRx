@@ -1,7 +1,7 @@
 //チャートのデバッグ用に調整したダミーデータ
 export const sampleFitnessData = {
   analyzeResult: {
-    activity_analysis: [
+    activityAnalysis: [
       {
         start_time: '08:00',
         end_time: '09:00',
