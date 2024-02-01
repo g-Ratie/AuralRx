@@ -1,6 +1,5 @@
 'use client'
 import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
-// import { sampleFitnessData } from '@/utils/dummyFitnessData'
 import { useEffect, useMemo, useState } from 'react'
 import {
   CartesianGrid,
@@ -49,7 +48,6 @@ const FitnessChart: React.FC<FitnessChartProps> = ({ data }) => {
   }, [])
 
   const chartData = useMemo(() => transformDataForChart(data), [data])
-  // const chartData = transformDataForChart(sampleFitnessData)
 
   return (
     <ResponsiveContainer width="100%" height={containerHeight}>
