@@ -13,7 +13,7 @@ export type PostFitnessAPIRequestBody = {
   seedTrack: string[] | null
 }
 
-export async function handleGet(req: NextRequest): Promise<NextResponse> {
+export async function GET(req: NextRequest) {
   const googleAccessToken = await getGoogleAccessToken()
   if (googleAccessToken === undefined) {
     return NextResponse.json({ error: 'No access token' }, { status: 401 })
@@ -28,7 +28,7 @@ export async function handleGet(req: NextRequest): Promise<NextResponse> {
   }
 }
 
-export async function handlePost(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: NextRequest) {
   const json = await req.json()
   const parsedJson = fitnessOutputSchema.parse(json)
 
@@ -49,13 +49,4 @@ export async function handlePost(req: NextRequest): Promise<NextResponse> {
     console.error(error)
     return NextResponse.json({ error: 'Failed to generate recommendations' }, { status: 500 })
   }
-}
-
-// Next.jsのAPIルートでこれらの関数を適切にエクスポートする
-export function GET(req: NextRequest) {
-  return handleGet(req)
-}
-
-export function POST(req: NextRequest) {
-  return handlePost(req)
 }

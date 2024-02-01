@@ -2,12 +2,12 @@ import { chatUtils } from '@/common/LLM/chatUtils'
 import { fitnessOutputSchema } from '@/common/LLM/fitnessOutputSchema'
 import { NextRequest, NextResponse } from 'next/server'
 
-async function handleGet(req: NextRequest): Promise<NextResponse> {
+export async function GET(req: NextRequest) {
   const analyzeResult = await chatUtils.analyzeHealthDataWithMock()
   return NextResponse.json(analyzeResult)
 }
 
-async function handlePost(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: NextRequest) {
   const json = await req.json()
   const parsedJson = fitnessOutputSchema.parse(json.activityAnalysis)
 
@@ -23,12 +23,4 @@ async function handlePost(req: NextRequest): Promise<NextResponse> {
   )
 
   return NextResponse.json(recommendParams)
-}
-
-export function GET(req: NextRequest) {
-  return handleGet(req)
-}
-
-export function POST(req: NextRequest) {
-  return handlePost(req)
 }
