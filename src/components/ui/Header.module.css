@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  width: 100%;
+  height: min(80px, 16svmin);
+  overflow: hidden;
+}
+
+.logo {
+  height: 100%;
+  display: block;
+}
+
+.logo > img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+}
+
+.github {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.github > svg {
+  display: block;
+}
+
+.github:hover,
+.github:focus-visible {
+  background-color: #0001;
+}
+
+.github:active {
+  background-color: #0002;
+}
