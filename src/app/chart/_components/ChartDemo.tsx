@@ -1,16 +1,48 @@
-import { fetchFitnessData, fetchFitnessDataWithMock } from '@/utils/fetchAPIData'
+'use client'
+import { FitnessOutput, fitnessOutputSchema } from '@/common/LLM/fitnessOutputSchema'
+import { useEffect, useState } from 'react'
+import { Loading } from '../../../components/ui/Loading'
 import FetchDataButton from './FetchDataButton'
 import FitnessChart from './FitnessDataCharts'
 
-export default async function ChartDemo() {
-  const fitnessData = await fetchFitnessDataWithMock()
+export default function ChartDemo() {
+  const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  if (!fitnessData) return <div>Error loading fitness data.</div>
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true)
+      try {
+        const response = await fetch('/api/fitness', { method: 'GET' })
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        const responseData = await response.json()
+        const parsedFitnessData = fitnessOutputSchema.parse(responseData)
+        setFitnessData(parsedFitnessData)
+      } catch (error) {
+        console.error('Error loading fitness data:', error)
+        setFitnessData(null)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <div>
-      <FitnessChart data={fitnessData} />
-      <FetchDataButton fitnessData={fitnessData} />
+      {isLoading ? (
+        <Loading visible={isLoading} />
+      ) : fitnessData ? (
+        <>
+          <FitnessChart data={fitnessData} />
+          <FetchDataButton fitnessData={fitnessData} />
+        </>
+      ) : (
+        <div>Error loading fitness data.</div>
+      )}
     </div>
   )
 }
