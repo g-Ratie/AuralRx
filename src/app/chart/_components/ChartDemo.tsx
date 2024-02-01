@@ -1,9 +1,9 @@
-import { fetchFitnessData } from '@/utils/fetchAPIData'
+import { fetchFitnessData, fetchFitnessDataWithMock } from '@/utils/fetchAPIData'
+import FetchDataButton from './FetchDataButton'
 import FitnessChart from './FitnessDataCharts'
-import FetchDataButton from './RecommendButton'
 
 export default async function ChartDemo() {
-  const fitnessData = await fetchFitnessData()
+  const fitnessData = await fetchFitnessDataWithMock()
 
   if (!fitnessData) return <div>Error loading fitness data.</div>
 
