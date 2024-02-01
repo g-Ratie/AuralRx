@@ -55,7 +55,16 @@ export const getHeartRate = async (accessToken: string) => {
   }
 }
 
-export const getFitnessData = async (accessToken: string) => {
+export type FitnessData = {
+  step: {
+    [key: string]: number
+  } | null
+  heartRate: {
+    [key: string]: number
+  } | null
+}
+
+export const getFitnessData = async (accessToken: string): Promise<FitnessData> => {
   const auth = new google.auth.OAuth2({
     clientId: GOOGLEFIT_CLIENT_ID,
     clientSecret: GOOGLEFIT_CLIENT_SECRET,
@@ -69,7 +78,7 @@ export const getFitnessData = async (accessToken: string) => {
 
     return {
       step: countingHourlySum(stepData),
-      heartrate: countingHourlyAverage(heartRateData),
+      heartRate: countingHourlyAverage(heartRateData),
     }
   } catch (error) {
     console.error('Error fetching fitness data:', error)
