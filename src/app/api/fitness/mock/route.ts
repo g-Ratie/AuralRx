@@ -8,7 +8,7 @@ export type PostFitnessAPIResponse = {
 }
 
 export type PostFitnessAPIRequestBody = {
-  activityAnalysis: FitnessOutput['activity_analysis']
+  activityAnalysis: FitnessOutput['activityAnalysis']
   seedTrack: string[] | null
 }
 
@@ -22,7 +22,7 @@ async function handlePost(req: NextRequest): Promise<NextResponse> {
   const parsedJson = fitnessOutputSchema.parse(json.activityAnalysis)
 
   const recommendParams = await Promise.all(
-    parsedJson.activity_analysis.map(async (activity) => {
+    parsedJson.activityAnalysis.map(async (activity) => {
       const seedTrack = json.seedTrack && json.seedTrack.length > 0 ? json.seedTrack[0] : null
       const recommendResult = await chatUtils.recommendSongParameter(
         JSON.stringify(activity.activity_inference),
