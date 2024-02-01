@@ -1,6 +1,6 @@
 'use client'
 import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
-import { fetchRecommendedData } from '@/common/hooks/fetchAPIData'
+import { fetchRecommendedData } from '@/utils/fetchAPIData'
 
 export default function FetchDataButton({ fitnessData }: { fitnessData: FitnessOutput }) {
   const handleClick = async () => {

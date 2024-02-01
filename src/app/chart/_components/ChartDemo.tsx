@@ -1,4 +1,4 @@
-import { fetchFitnessData } from '@/common/hooks/fetchAPIData'
+import { fetchFitnessData } from '@/utils/fetchAPIData'
 import FitnessChart from './FitnessDataCharts'
 import FetchDataButton from './RecommendButton'
 

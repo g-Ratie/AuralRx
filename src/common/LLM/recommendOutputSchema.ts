@@ -39,7 +39,7 @@ const recommendationSchemaWithSeedTracks = baseRecommendationSchema.extend({
     ),
 })
 
-const extendedRecommendationSchema = z.union([
+export const extendedRecommendationSchema = z.union([
   recommendationSchemaWithSeedGenres,
   recommendationSchemaWithSeedTracks,
 ])
