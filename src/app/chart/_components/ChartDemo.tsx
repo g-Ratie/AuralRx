@@ -1,7 +1,7 @@
 'use client'
 import { FitnessOutput, fitnessOutputSchema } from '@/common/LLM/fitnessOutputSchema'
 import { Loading } from '@/components/ui/Loading'
-import { useEffect, useState } from 'React'
+import { useEffect, useState } from 'react'
 import FitnessChart from '../../../components/chart/FitnessDataCharts'
 import FetchDataButton from './FetchDataButton'
 
