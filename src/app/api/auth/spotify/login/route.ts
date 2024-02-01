@@ -1,4 +1,4 @@
-import { SPOTIFY_CLIENT_ID } from '@/service/envValues'
+import { SPOTIFY_CLIENT_ID } from '@/common/envValues'
 import { generateRandomString } from '@/utils/randomString'
 import { NextResponse } from 'next/server'
 

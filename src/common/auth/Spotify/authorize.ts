@@ -1,4 +1,4 @@
-import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '@/service/envValues'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '@/common/envValues'
 import { SpotifyAuthResponse, spotifyAuthResponseScheme } from './authResponseScheme'
 
 const redirect_uri = 'http://localhost:3000/api/auth/spotify/callback'

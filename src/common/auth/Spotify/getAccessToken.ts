@@ -1,13 +1,13 @@
-import { SpotifySession, sessionOptions } from '@/common/auth/ironSessionConfig'
-import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '@/service/envValues'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '@/common/envValues'
 import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
+import { SpotifySession, spotifySessionOptions } from '../ironSessionConfig'
 import { SpotifyAuthResponse, spotifyAuthResponseScheme } from './authResponseScheme'
 
 const tokenEndpoint = 'https://accounts.spotify.com/api/token'
 
 export const getSpotifyAccessToken = async () => {
-  const session = await getIronSession<SpotifySession>(cookies(), sessionOptions)
+  const session = await getIronSession<SpotifySession>(cookies(), spotifySessionOptions)
   if (session.expiresAt > Date.now()) return session.accessToken
 
   const params = new URLSearchParams({

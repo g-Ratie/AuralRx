@@ -1,3 +1,4 @@
+import { GoogleLoginButton } from '@/components/auth/GoogleLoginButton'
 import { SpotifyLoginButton } from '@/components/auth/SpotifyLoginButton'
 import styles from './page.module.css'
 
@@ -6,6 +7,7 @@ export default async function Home() {
     <main className={styles.main}>
       <p>Hello, Hackathon</p>
       <SpotifyLoginButton />
+      <GoogleLoginButton />
     </main>
   )
 }

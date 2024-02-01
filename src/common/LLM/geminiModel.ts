@@ -1,4 +1,4 @@
-import { GEMINI_API_KEY } from '@/service/envValues'
+import { GEMINI_API_KEY } from '@/common/envValues'
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
 
 export const geminiModel = new ChatGoogleGenerativeAI({
