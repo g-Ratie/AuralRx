@@ -1,16 +1,6 @@
 import { chatUtils } from '@/common/LLM/chatUtils'
-import { FitnessOutput, fitnessOutputSchema } from '@/common/LLM/fitnessOutputSchema'
-import { ExtendedRecommendationParams } from '@/common/LLM/recommendOutputSchema'
+import { fitnessOutputSchema } from '@/common/LLM/fitnessOutputSchema'
 import { NextRequest, NextResponse } from 'next/server'
-
-export type PostFitnessAPIResponse = {
-  recommendParams: ExtendedRecommendationParams[]
-}
-
-export type PostFitnessAPIRequestBody = {
-  activityAnalysis: FitnessOutput['activityAnalysis']
-  seedTrack: string[] | null
-}
 
 async function handleGet(req: NextRequest): Promise<NextResponse> {
   const analyzeResult = await chatUtils.analyzeHealthDataWithMock()
@@ -32,8 +22,7 @@ async function handlePost(req: NextRequest): Promise<NextResponse> {
     }),
   )
 
-  const response: PostFitnessAPIResponse = { recommendParams }
-  return NextResponse.json(response)
+  return NextResponse.json(recommendParams)
 }
 
 export function GET(req: NextRequest) {

@@ -4,9 +4,13 @@ import { ExtendedRecommendationParams } from '@/common/LLM/recommendOutputSchema
 import { getGoogleAccessToken } from '@/common/auth/Google/getAccessToken'
 import { NextRequest, NextResponse } from 'next/server'
 
-export type FitnessAPIResponse = {
-  analyzeResult?: FitnessOutput
-  recommendParams?: ExtendedRecommendationParams[]
+export type PostFitnessAPIResponse = {
+  recommendParams: ExtendedRecommendationParams[]
+}
+
+export type PostFitnessAPIRequestBody = {
+  activityAnalysis: FitnessOutput['activityAnalysis']
+  seedTrack: string[] | null
 }
 
 export async function handleGet(req: NextRequest): Promise<NextResponse> {
@@ -17,7 +21,7 @@ export async function handleGet(req: NextRequest): Promise<NextResponse> {
 
   try {
     const analyzeResult = await chatUtils.analyzeHealthData(googleAccessToken)
-    return NextResponse.json({ analyzeResult })
+    return NextResponse.json(analyzeResult)
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to analyze health data' }, { status: 500 })
@@ -40,7 +44,7 @@ export async function handlePost(req: NextRequest): Promise<NextResponse> {
       }),
     )
 
-    return NextResponse.json({ recommendParams })
+    return NextResponse.json(recommendParams)
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to generate recommendations' }, { status: 500 })
