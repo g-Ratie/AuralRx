@@ -1,5 +1,6 @@
 import { googleAuthorize } from '@/common/auth/Google/authorize'
 import { GoogleSession, googleSessionOptions } from '@/common/auth/ironSessionConfig'
+import { BASE_URL } from '@/common/envValues'
 import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
@@ -16,5 +17,5 @@ export const GET = async (req: NextRequest) => {
   session.expiresAt = response.expiry_date ?? undefined
   await session.save()
 
-  return NextResponse.redirect('http://localhost:3000/app/login/google')
+  return NextResponse.redirect(`${BASE_URL}/app/login/google`)
 }
