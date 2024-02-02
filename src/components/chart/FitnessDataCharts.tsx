@@ -54,15 +54,15 @@ const FitnessChart: React.FC<FitnessChartProps> = ({ data }) => {
       <ComposedChart data={chartData} margin={{ top: 15, right: 10, left: 10, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="time" />
-        <YAxis yAxisId="heartRate" orientation="left" stroke="rgb(216, 71, 77)" domain={[0, 230]} />
-        <YAxis yAxisId="steps" orientation="right" stroke="#82ca9d" />
+        <YAxis yAxisId="heartRate" orientation="left" stroke="#ea6d82" domain={[0, 230]} />
+        <YAxis yAxisId="steps" orientation="right" stroke="#7ee28c" />
         <Tooltip />
         <Legend />
         <Line
           yAxisId="steps"
           type="monotone"
           dataKey="totalSteps"
-          stroke="rgb(130, 202, 157)"
+          stroke="#7ee28c"
           strokeWidth={2.5}
           dot={false}
           name="平均歩数"
@@ -71,7 +71,7 @@ const FitnessChart: React.FC<FitnessChartProps> = ({ data }) => {
           yAxisId="heartRate"
           type="monotone"
           dataKey="averageHeartRate"
-          stroke="rgb(216, 71, 77)"
+          stroke="#ea6d82"
           dot={false}
           strokeWidth={2}
           name="平均心拍数"
