@@ -1,8 +1,11 @@
+import { CSSProperties } from 'react'
+
 type Props = {
   width?: number
+  style?: CSSProperties
 }
 
-export const IllustFitness = ({ width }: Props) => {
+export const IllustFitness = ({ width, style }: Props) => {
   const defaultWidth = 500
   const computedWidth = width ?? defaultWidth
   const height = (computedWidth * 579) / 892
@@ -13,6 +16,7 @@ export const IllustFitness = ({ width }: Props) => {
       width={computedWidth}
       height={height}
       viewBox="0 0 892.34963 579.10966"
+      style={style}
     >
       <title>fitness</title>
       <path
