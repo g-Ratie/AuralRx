@@ -3,7 +3,7 @@ import { FitnessOutput, fitnessOutputSchema } from '@/common/LLM/fitnessOutputSc
 import { Loading } from '@/components/ui/Loading'
 import { useEffect, useState } from 'react'
 import FitnessChart from '../../../components/chart/FitnessDataCharts'
-import FetchDataButton from './FetchDataButton'
+import ButtonsParentClient from './ButtonsParentClient'
 
 const ChartDemo = () => {
   const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)
@@ -38,7 +38,7 @@ const ChartDemo = () => {
       ) : fitnessData ? (
         <>
           <FitnessChart data={fitnessData} />
-          <FetchDataButton fitnessData={fitnessData} />
+          <ButtonsParentClient fitnessData={fitnessData} />
         </>
       ) : (
         <div>Error loading fitness data.</div>
