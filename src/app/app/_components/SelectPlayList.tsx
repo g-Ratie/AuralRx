@@ -1,17 +1,18 @@
 'use client'
 
+import { LikesCard } from '@/components/music/LikesCard'
 import { PlaylistCard } from '@/components/music/PlaylistCard'
 import { Button } from '@/components/ui/Button'
 import { Loading } from '@/components/ui/Loading'
 import { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk'
-import { IconMusicPlus } from '@tabler/icons-react'
+import { IconMusicBolt, IconMusicPlus } from '@tabler/icons-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import styles from './SelectPlayList.module.css'
 
 type Props = {
-  selectedId?: SimplifiedPlaylist['id']
-  handleSelect: (id: SimplifiedPlaylist['id']) => void
+  selectedId?: SimplifiedPlaylist['id'] | 'liked'
+  handleSelect: (id: SimplifiedPlaylist['id'] | 'liked') => void
 }
 
 export const SelectPlayList = ({ selectedId, handleSelect }: Props) => {
@@ -32,16 +33,24 @@ export const SelectPlayList = ({ selectedId, handleSelect }: Props) => {
   return playlists.length === 0 ? (
     <div className={styles.noPlaylist}>
       <p>プレイリストが見つかりませんでした。</p>
-      <Link href="https://open.spotify.com">
+      <p className={styles.buttons}>
+        <Link href="https://open.spotify.com">
+          <Button
+            Icon={IconMusicPlus}
+            label="プレイリストを作成"
+            style={{ backgroundColor: '#eee' }}
+          />
+        </Link>
         <Button
-          Icon={IconMusicPlus}
-          label="プレイリストを作成"
-          style={{ backgroundColor: '#eee' }}
+          label="再生履歴からレコメンド"
+          Icon={IconMusicBolt}
+          style={{ backgroundColor: '#ded' }}
         />
-      </Link>
+      </p>
     </div>
   ) : (
     <div className={styles.container}>
+      <LikesCard onSelect={handleSelect} isSelected={selectedId === 'liked'} />
       {playlists.map((playlist) => (
         <PlaylistCard
           key={playlist.id}

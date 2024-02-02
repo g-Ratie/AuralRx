@@ -21,6 +21,11 @@
   background-color: #0000;
 }
 
+.buttons {
+  display: flex;
+  gap: 16px;
+}
+
 .noPlaylist {
   display: flex;
   flex-direction: column;

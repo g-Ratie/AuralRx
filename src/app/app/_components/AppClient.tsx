@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { SelectPlayList } from './SelectPlayList'
 
 export const AppClient = () => {
-  const [selectedPlaylistId, setSelectedPlaylistId] = useState<SimplifiedPlaylist['id']>()
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState<SimplifiedPlaylist['id'] | 'liked'>()
 
-  const handleSelect = (id: SimplifiedPlaylist['id']) => {
+  const handleSelect = (id: SimplifiedPlaylist['id'] | 'liked') => {
     setSelectedPlaylistId(id)
   }
 
