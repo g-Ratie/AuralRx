@@ -1,0 +1,60 @@
+.container {
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: grid;
+  width: 200px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  border: solid 1px #ddd;
+  border-radius: 16px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 2px 2px 4px #0000000a, inset 0 0 0 2px #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.container.active {
+  background-color: #d5f3d2;
+  border-color: #08ce08;
+}
+
+.container:focus-visible {
+  outline: solid 2px #348734;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  object-fit: cover;
+  user-select: none;
+}
+
+.noImage {
+  width: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background-color: #999;
+  border-radius: 8px;
+  user-select: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.active > .noImage {
+  background-color: #7b9a7a;
+}
+
+.title {
+  margin: 0;
+  user-select: none;
+}
+
+.description {
+  margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+}
