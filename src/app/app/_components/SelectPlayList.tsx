@@ -1,7 +1,10 @@
 'use client'
 
 import { PlaylistCard } from '@/components/music/PlaylistCard'
+import { Button } from '@/components/ui/Button'
 import { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk'
+import { IconMusicPlus } from '@tabler/icons-react'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import styles from './SelectPlayList.module.css'
 
@@ -19,7 +22,18 @@ export const SelectPlayList = ({ selectedId, handleSelect }: Props) => {
       .then((data) => setPlaylists(data.playlists))
   }, [])
 
-  return (
+  return playlists.length === 0 ? (
+    <div className={styles.noPlaylist}>
+      <p>プレイリストが見つかりませんでした。</p>
+      <Link href="/app/playlist/create">
+        <Button
+          Icon={IconMusicPlus}
+          label="プレイリストを作成"
+          style={{ backgroundColor: '#eee' }}
+        />
+      </Link>
+    </div>
+  ) : (
     <div className={styles.container}>
       {playlists.map((playlist) => (
         <PlaylistCard

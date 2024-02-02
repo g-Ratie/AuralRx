@@ -20,3 +20,11 @@
 .container::-webkit-scrollbar-track {
   background-color: #0000;
 }
+
+.noPlaylist {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: 8px;
+  padding: 16px 0;
+}
