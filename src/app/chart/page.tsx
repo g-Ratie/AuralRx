@@ -1,6 +1,6 @@
 import ChartDemoWithMock from './_components/Mock/ChartDemoWithMock'
 
-const Home = () => {
+const Home = async () => {
   return (
     <main>
       <ChartDemoWithMock />
