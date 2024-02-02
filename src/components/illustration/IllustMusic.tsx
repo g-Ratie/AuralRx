@@ -1,8 +1,11 @@
+import { CSSProperties } from 'react'
+
 type Props = {
   width?: number
+  style?: CSSProperties
 }
 
-export const IllustMusic = ({ width }: Props) => {
+export const IllustMusic = ({ width, style }: Props) => {
   const defaultWidth = 500
   const computedWidth = width ?? defaultWidth
   const height = (computedWidth * 744) / 758
@@ -12,6 +15,7 @@ export const IllustMusic = ({ width }: Props) => {
       width={computedWidth}
       height={height}
       viewBox="0 0 757.964 743.732"
+      style={style}
     >
       <title>music</title>
       <g id="Group_4" data-name="Group 4" transform="translate(-221 -78)">
