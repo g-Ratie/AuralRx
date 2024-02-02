@@ -90,14 +90,13 @@ export async function POST(req: NextRequest) {
     const selectedTracks: { id: string; name: string; albumImages: Image[] }[] = []
     const trackIds = new Set<string>()
 
-    // biome-ignore lint/complexity/noForEach: <explanation>
-    res.forEach((subArray) => {
+    for (const subArray of res) {
       const track = subArray.find((track) => !trackIds.has(track.id))
       if (track) {
         selectedTracks.push(track)
         trackIds.add(track.id)
       }
-    })
+    }
 
     return NextResponse.json(selectedTracks)
   } catch (error) {
