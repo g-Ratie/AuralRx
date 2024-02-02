@@ -1,8 +1,17 @@
 'use client'
 
 import { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk'
+import { IconMusicCode } from '@tabler/icons-react'
 import { KeyboardEvent } from 'react'
 import styles from './PlaylistCard.module.css'
+
+const NoImage = () => {
+  return (
+    <div className={styles.noImage}>
+      <IconMusicCode size={48} />
+    </div>
+  )
+}
 
 type Props = {
   playlist: SimplifiedPlaylist
@@ -28,7 +37,11 @@ export const PlaylistCard = ({ playlist, onSelect, isSelected = false }: Props) 
       onClick={() => onSelect(playlist.id)}
       onKeyDown={handleKeyDown}
     >
-      <img className={styles.image} src={playlist.images[0].url} alt={playlist.name} />
+      {playlist.images.length > 0 ? (
+        <img src={playlist.images[0].url} alt={playlist.name} className={styles.image} />
+      ) : (
+        <NoImage />
+      )}
       <h3 className={styles.title}>{playlist.name}</h3>
       <p className={styles.description}>{playlist.description}</p>
     </div>
