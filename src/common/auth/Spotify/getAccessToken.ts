@@ -28,7 +28,9 @@ export const getSpotifyAccessToken = async () => {
   })
 
   const data = await response.json()
-  const parsed: SpotifyAuthResponse = spotifyAuthResponseScheme.parse(data)
+  const parsed: Omit<SpotifyAuthResponse, 'refresh_token'> = spotifyAuthResponseScheme
+    .omit({ refresh_token: true })
+    .parse(data)
 
   session.accessToken = parsed.access_token
   session.expiresAt = Date.now() + parsed.expires_in * 1000
