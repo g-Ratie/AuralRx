@@ -1,6 +1,7 @@
 import { getGoogleAccessToken } from '@/common/auth/Google/getAccessToken'
 import { getSpotifyAccessToken } from '@/common/auth/Spotify/getAccessToken'
 import { redirect } from 'next/navigation'
+import { AppClient } from './_components/AppClient'
 
 const Home = async () => {
   const googleToken = await getGoogleAccessToken()
@@ -8,7 +9,11 @@ const Home = async () => {
   const spotifyToken = await getSpotifyAccessToken()
   if (spotifyToken === undefined) redirect('/app/login/spotify')
 
-  return <div>app</div>
+  return (
+    <div>
+      <AppClient />
+    </div>
+  )
 }
 
 export default Home
