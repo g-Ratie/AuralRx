@@ -7,6 +7,7 @@ export const getRecommendations = async (
   target_energy: RecommendationsRequest['target_energy'],
   target_instrumentalness: RecommendationsRequest['target_instrumentalness'],
   target_valence: RecommendationsRequest['target_valence'],
+  limit: RecommendationsRequest['limit'],
 ) => {
   const recommendations = await spotifyClient.recommendations.get({
     seed_genres,
@@ -14,6 +15,7 @@ export const getRecommendations = async (
     target_energy,
     target_instrumentalness,
     target_valence,
+    limit,
   })
   return recommendations
 }
