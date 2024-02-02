@@ -16,5 +16,5 @@ export const GET = async (req: NextRequest) => {
   session.expiresAt = response.expiry_date ?? undefined
   await session.save()
 
-  return NextResponse.redirect('http://localhost:3000/')
+  return NextResponse.redirect('http://localhost:3000/app/login/google')
 }

@@ -1,8 +1,6 @@
-import { SPOTIFY_CLIENT_ID } from '@/common/envValues'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '@/common/envValues'
 import { generateRandomString } from '@/utils/randomString'
 import { NextResponse } from 'next/server'
-
-const redirectUri = 'http://localhost:3000/api/auth/spotify/callback'
 
 const scope = [
   'playlist-modify-public',
@@ -16,7 +14,7 @@ export const GET = async () => {
     response_type: 'code',
     client_id: SPOTIFY_CLIENT_ID,
     scope: scope.join(' '),
-    redirect_uri: redirectUri,
+    redirect_uri: SPOTIFY_REDIRECT_URI,
     state: generateRandomString(16),
   })
 

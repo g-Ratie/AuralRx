@@ -17,5 +17,5 @@ export const GET = async (req: NextRequest) => {
   session.expiresAt = Date.now() + response.expires_in * 1000
   await session.save()
 
-  return NextResponse.redirect('http://localhost:3000/')
+  return NextResponse.redirect('http://localhost:3000/app')
 }

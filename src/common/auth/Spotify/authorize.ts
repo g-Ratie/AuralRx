@@ -5,7 +5,7 @@ export const spotifyAuthorize = async (code: string) => {
   const params = new URLSearchParams({
     grant_type: 'authorization_code',
     code,
-    SPOTIFY_REDIRECT_URI,
+    redirect_uri: SPOTIFY_REDIRECT_URI,
   })
   const buffer = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`, 'utf-8')
   const headers = new Headers({
@@ -20,7 +20,6 @@ export const spotifyAuthorize = async (code: string) => {
   })
 
   const data = await response.json()
-  console.log(data)
   const parsed: SpotifyAuthResponse = spotifyAuthResponseScheme.parse(data)
   return parsed
 }
