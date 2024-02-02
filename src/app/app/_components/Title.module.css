@@ -1,0 +1,15 @@
+.title {
+  position: relative;
+  margin: 24px 0;
+}
+
+.number {
+  position: absolute;
+  left: 0;
+  color: #7ee28c70;
+  scale: 3;
+}
+
+.text {
+  position: relative;
+}
