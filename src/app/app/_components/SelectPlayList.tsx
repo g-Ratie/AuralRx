@@ -2,6 +2,7 @@
 
 import { PlaylistCard } from '@/components/music/PlaylistCard'
 import { Button } from '@/components/ui/Button'
+import { Loading } from '@/components/ui/Loading'
 import { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk'
 import { IconMusicPlus } from '@tabler/icons-react'
 import Link from 'next/link'
@@ -15,12 +16,18 @@ type Props = {
 
 export const SelectPlayList = ({ selectedId, handleSelect }: Props) => {
   const [playlists, setPlaylists] = useState<SimplifiedPlaylist[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch('/api/spotify/playlist')
       .then((res) => res.json())
       .then((data) => setPlaylists(data.playlists))
+      .finally(() => setLoading(false))
   }, [])
+
+  if (loading) {
+    return <Loading visible={loading} />
+  }
 
   return playlists.length === 0 ? (
     <div className={styles.noPlaylist}>
