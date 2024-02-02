@@ -7,36 +7,27 @@ import FitnessChart from '../../../../components/chart/FitnessDataCharts'
 import ButtonsParentClient from '../ButtonsParentClient'
 
 const ChartDemoWithMock = () => {
-  const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)
+  const [fitnessData, setFitnessData] = useState<FitnessOutput>()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true)
-      const res = await fetchFitnessDataWithMock()
-      if (res) {
+    fetchFitnessDataWithMock()
+      .then((res) => {
+        if (!res) return
         setFitnessData(res)
         setIsLoading(false)
-      }
-      setIsLoading(false)
-    }
-
-    fetchData()
+      })
+      .finally(() => setIsLoading(false))
   }, [])
+
+  if (isLoading) return <Loading visible={isLoading} />
+  if (fitnessData === undefined) return <div>Error loading fitness data.</div>
 
   return (
     <div>
       <p>モックデータ</p>
-      {isLoading ? (
-        <Loading visible={isLoading} />
-      ) : fitnessData ? (
-        <>
-          <FitnessChart data={fitnessData} />
-          <ButtonsParentClient fitnessData={fitnessData} />
-        </>
-      ) : (
-        <div>Error loading fitness data.</div>
-      )}
+      <FitnessChart data={fitnessData} />
+      <ButtonsParentClient fitnessData={fitnessData} />
     </div>
   )
 }

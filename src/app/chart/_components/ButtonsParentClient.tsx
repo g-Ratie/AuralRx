@@ -1,8 +1,8 @@
 import { RecommendationSongList } from '@/app/api/spotify/recommend/route'
 import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
 import { useState } from 'react'
-import CreatePlaylistButton from './CreatePlaylistButton'
-import FetchRecommendationsButton from './FetchRecommendationsButton'
+import { CreatePlaylistButton } from './CreatePlaylistButton'
+import { FetchRecommendationsButton } from './FetchRecommendationsButton'
 
 const ButtonsParentClient = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
   const [recommendSongData, setRecommendSongData] = useState<RecommendationSongList | null>(null)

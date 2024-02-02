@@ -10,39 +10,27 @@ const ChartDemo = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true)
-      try {
-        const response = await fetch('/api/fitness', { method: 'GET' })
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        const responseData = await response.json()
-        const parsedFitnessData = fitnessOutputSchema.parse(responseData)
-        setFitnessData(parsedFitnessData)
-      } catch (error) {
+    fetch('/api/fitness')
+      .then((res) => {
+        if (!res.ok) throw new Error('Network response was not ok')
+        const data = res.json()
+        const parsedData = fitnessOutputSchema.parse(data)
+        setFitnessData(parsedData)
+      })
+      .catch((error) => {
         console.error('Error loading fitness data:', error)
         setFitnessData(null)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchData()
+      })
+      .finally(() => setIsLoading(false))
   }, [])
+
+  if (isLoading) return <Loading visible={isLoading} />
+  if (fitnessData === null) return <div>Error loading fitness data.</div>
 
   return (
     <div>
-      {isLoading ? (
-        <Loading visible={isLoading} />
-      ) : fitnessData ? (
-        <>
-          <FitnessChart data={fitnessData} />
-          <ButtonsParentClient fitnessData={fitnessData} />
-        </>
-      ) : (
-        <div>Error loading fitness data.</div>
-      )}
+      <FitnessChart data={fitnessData} />
+      <ButtonsParentClient fitnessData={fitnessData} />
     </div>
   )
 }
