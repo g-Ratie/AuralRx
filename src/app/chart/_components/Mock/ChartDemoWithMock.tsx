@@ -4,7 +4,7 @@ import { Loading } from '@/components/ui/Loading'
 import { fetchFitnessDataWithMock } from '@/utils/fetchAPIData'
 import { useEffect, useState } from 'react'
 import FitnessChart from '../../../../components/chart/FitnessDataCharts'
-import ButtonsParentClient from './ButtonsParentClient'
+import ButtonsParentClient from '../ButtonsParentClient'
 
 const ChartDemoWithMock = () => {
   const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)

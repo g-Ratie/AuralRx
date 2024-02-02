@@ -24,7 +24,7 @@ const FetchRecommendationsButton: React.FC<FetchRecommendationsButtonProps> = ({
         body: JSON.stringify(recommendedParams),
       })
       const recommendSongData = await recommendSongResponse.json()
-      onRecommendationsFetched(recommendSongData) // レコメンドデータを親コンポーネントに渡す
+      onRecommendationsFetched(recommendSongData)
     } catch (error) {
       console.error('Error fetching recommended data:', error)
     }
