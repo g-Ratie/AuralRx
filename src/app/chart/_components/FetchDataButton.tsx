@@ -2,8 +2,8 @@
 import { PostFitnessAPIRequestBody } from '@/app/api/fitness/route'
 import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
 import { extendedRecommendationSchema } from '@/common/LLM/recommendOutputSchema'
+import { BASE_URL } from '@/common/envValues'
 import { Button } from '@/components/ui/Button'
-import { fetchRecommendedDataWithMock } from '@/utils/fetchAPIData'
 
 const FetchDataButton = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
   async function fetchRecommendedData(fitnessData: FitnessOutput, seedTrack: string[] | null) {
@@ -12,7 +12,7 @@ const FetchDataButton = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
         activityAnalysis: fitnessData.activityAnalysis,
         seedTrack: seedTrack,
       }
-      const response = await fetch('http://localhost:3000/api/fitness', {
+      const response = await fetch(`${BASE_URL}/api/fitness`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' },
@@ -32,7 +32,6 @@ const FetchDataButton = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
   const handleClick = async () => {
     try {
       const recommendedData = await fetchRecommendedData(fitnessData, null)
-      console.log('Recommended Data:', recommendedData)
     } catch (error) {
       console.error('Error fetching recommended data:', error)
     }

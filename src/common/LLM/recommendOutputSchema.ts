@@ -45,3 +45,6 @@ export const extendedRecommendationSchema = z.union([
 ])
 
 export type ExtendedRecommendationParams = z.infer<typeof extendedRecommendationSchema>
+
+export type RecommendationParamsWithSeedGenres = z.infer<typeof recommendationSchemaWithSeedGenres>
+export type RecommendationParamsWithSeedTracks = z.infer<typeof recommendationSchemaWithSeedTracks>

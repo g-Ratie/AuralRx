@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+const BASE_URL = z.string().url().parse(process.env.BASE_URL)
 const SPOTIFY_CLIENT_ID = z.string().parse(process.env.SPOTIFY_CLIENT_ID)
 const SPOTIFY_CLIENT_SECRET = z.string().parse(process.env.SPOTIFY_CLIENT_SECRET)
 const SPOTIFY_REDIRECT_URI = z.string().url().parse(process.env.SPOTIFY_REDIRECT_URI)
@@ -15,6 +16,7 @@ const GOOGLEFIT_REDIRECT_URI = z.string().url().parse(process.env.GOOGLEFIT_REDI
 const IRON_SESSION_PASSWORD = z.string().min(32).parse(process.env.IRON_SESSION_PASSWORD)
 
 export {
+  BASE_URL,
   CHATGPT_API_KEY,
   CHATGPT_ENDPOINT,
   GEMINI_API_KEY,

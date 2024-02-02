@@ -4,7 +4,7 @@ import { Loading } from '@/components/ui/Loading'
 import { fetchFitnessDataWithMock } from '@/utils/fetchAPIData'
 import { useEffect, useState } from 'react'
 import FitnessChart from '../../../../components/chart/FitnessDataCharts'
-import FetchDataButtonWithMock from './FetchDataButtonWithMock'
+import ButtonsParentClient from '../ButtonsParentClient'
 
 const ChartDemoWithMock = () => {
   const [fitnessData, setFitnessData] = useState<FitnessOutput | null>(null)
@@ -26,12 +26,13 @@ const ChartDemoWithMock = () => {
 
   return (
     <div>
+      <p>モックデータ</p>
       {isLoading ? (
         <Loading visible={isLoading} />
       ) : fitnessData ? (
         <>
           <FitnessChart data={fitnessData} />
-          <FetchDataButtonWithMock fitnessData={fitnessData} />
+          <ButtonsParentClient fitnessData={fitnessData} />
         </>
       ) : (
         <div>Error loading fitness data.</div>
