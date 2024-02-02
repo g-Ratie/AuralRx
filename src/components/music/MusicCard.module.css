@@ -1,0 +1,46 @@
+.container {
+  text-decoration: none;
+  color: inherit;
+  display: grid;
+  grid-template:
+    "image title spotify"
+    "image artist spotify"
+    "image album spotify" / 100px 1fr 32px;
+  row-gap: 8px;
+  column-gap: 24px;
+  margin-bottom: 36px;
+}
+
+.image {
+  grid-area: image;
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.title {
+  grid-area: title;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.artist {
+  grid-area: artist;
+  font-size: 16px;
+  margin: 0;
+}
+
+.album {
+  grid-area: album;
+  font-size: 16px;
+  margin: 0;
+}
+
+.spotify {
+  grid-area: spotify;
+  display: block;
+  color: inherit;
+}
