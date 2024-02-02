@@ -1,9 +1,18 @@
-'use client'
+import { RecommendationSongList } from '@/app/api/spotify/recommend/route'
 import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
 import { Button } from '@/components/ui/Button'
 import { fetchRecommendedDataWithMock } from '@/utils/fetchAPIData'
+import React from 'react'
 
-const FetchDataButtonWithMock = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
+type FetchRecommendationsButtonProps = {
+  fitnessData: FitnessOutput
+  onRecommendationsFetched: (recommendSongData: RecommendationSongList) => void
+}
+
+const FetchRecommendationsButton: React.FC<FetchRecommendationsButtonProps> = ({
+  fitnessData,
+  onRecommendationsFetched,
+}) => {
   const handleClick = async () => {
     try {
       const recommendedParams = await fetchRecommendedDataWithMock(fitnessData, null)
@@ -15,20 +24,13 @@ const FetchDataButtonWithMock = ({ fitnessData }: { fitnessData: FitnessOutput }
         body: JSON.stringify(recommendedParams),
       })
       const recommendSongData = await recommendSongResponse.json()
-
-      await fetch('/api/spotify/playlist/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(recommendSongData),
-      })
+      onRecommendationsFetched(recommendSongData) // レコメンドデータを親コンポーネントに渡す
     } catch (error) {
       console.error('Error fetching recommended data:', error)
     }
   }
 
-  return <Button onClick={handleClick} label="レコメンドを取得(モック)" />
+  return <Button onClick={handleClick} label="レコメンドを取得" />
 }
 
-export default FetchDataButtonWithMock
+export default FetchRecommendationsButton
