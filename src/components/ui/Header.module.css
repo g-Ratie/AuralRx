@@ -2,10 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
   padding: 16px 0;
   width: 100%;
   height: min(80px, 16svmin);
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .logo {

@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  border-radius: 16px;
+  gap: 16px;
+  padding: 2px;
+  scroll-behavior: smooth;
+}
+
+.container::-webkit-scrollbar {
+  height: 3px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #0002;
+  border-radius: 3px;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #0000;
+}
+
+.noPlaylist {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: 8px;
+  padding: 16px 0;
+}
