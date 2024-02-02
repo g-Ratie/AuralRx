@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
   const today = dayjs().format('YYYY-MM-DD')
 
   const json = await req.json()
-  console.log(json)
+
   try {
     const parsedJson = RecommendationSongListSchema.parse(json)
     const trackUris = parsedJson.map((item) => item.uri)

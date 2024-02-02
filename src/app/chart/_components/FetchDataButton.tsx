@@ -32,7 +32,6 @@ const FetchDataButton = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
   const handleClick = async () => {
     try {
       const recommendedData = await fetchRecommendedData(fitnessData, null)
-      console.log('Recommended Data:', recommendedData)
     } catch (error) {
       console.error('Error fetching recommended data:', error)
     }

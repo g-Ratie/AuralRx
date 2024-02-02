@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
   const spotifyClient = await createSpotifyClient()
 
   const json = await req.json()
-  console.log(json)
+
   try {
     const arraySchema = z.array(extendedRecommendationSchema)
     const validationResult = arraySchema.safeParse(json)
