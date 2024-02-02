@@ -1,4 +1,5 @@
 import { SpotifySession, spotifySessionOptions } from '@/common/auth/ironSessionConfig'
+import { BASE_URL } from '@/common/envValues'
 import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
@@ -17,5 +18,5 @@ export const GET = async (req: NextRequest) => {
   session.expiresAt = Date.now() + response.expires_in * 1000
   await session.save()
 
-  return NextResponse.redirect('http://localhost:3000/')
+  return NextResponse.redirect(`${BASE_URL}/app`)
 }
