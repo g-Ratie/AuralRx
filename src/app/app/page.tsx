@@ -8,6 +8,7 @@ import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { AppClient } from './_components/AppClient'
+import styles from './page.module.css'
 
 const Home = async () => {
   const googleSession = await getIronSession<GoogleSession>(cookies(), googleSessionOptions)
@@ -16,9 +17,9 @@ const Home = async () => {
   if (spotifySession.accessToken === undefined) redirect('/app/login/spotify')
 
   return (
-    <div>
+    <main className={styles.container}>
       <AppClient />
-    </div>
+    </main>
   )
 }
 
