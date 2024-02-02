@@ -32,7 +32,7 @@ export const SelectPlayList = ({ selectedId, handleSelect }: Props) => {
   return playlists.length === 0 ? (
     <div className={styles.noPlaylist}>
       <p>プレイリストが見つかりませんでした。</p>
-      <Link href="/app/playlist/create">
+      <Link href="https://open.spotify.com">
         <Button
           Icon={IconMusicPlus}
           label="プレイリストを作成"
