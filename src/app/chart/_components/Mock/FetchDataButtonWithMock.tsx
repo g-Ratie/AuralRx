@@ -15,7 +15,6 @@ const FetchDataButtonWithMock = ({ fitnessData }: { fitnessData: FitnessOutput }
         body: JSON.stringify(recommendedParams),
       })
       const recommendSongData = await recommendSongResponse.json()
-      console.log('recommendSongData:', recommendSongData)
 
       await fetch('/api/spotify/playlist/create', {
         method: 'POST',
