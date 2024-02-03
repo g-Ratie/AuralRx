@@ -7,6 +7,7 @@ import {
 import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import PlayClient from './_components/Playclient'
 
 type Params = {
   searchParams: {
@@ -23,11 +24,7 @@ const Home = async ({ searchParams }: Params) => {
   const playlistId = searchParams.playlist
   if (!playlistId) return <main>Playlist not found</main>
 
-  return (
-    <main>
-      <h2>プレイリスト</h2>
-    </main>
-  )
+  return <PlayClient />
 }
 
 export default Home
