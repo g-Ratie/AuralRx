@@ -5,7 +5,7 @@ import {
 } from '@/common/LLM/recommendOutputSchema'
 import { createSpotifyClient } from '@/common/Spotify/spotifyClient'
 import { getSpotifyAccessToken } from '@/common/auth/Spotify/getAccessToken'
-import { Image, SpotifyApi } from '@spotify/web-api-ts-sdk'
+import { Image, SpotifyApi, Track } from '@spotify/web-api-ts-sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -15,6 +15,21 @@ export type RecommendationSongList = {
   uri: string
   albumImages: Image[]
 }[]
+
+export const recommendationSongSchema = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    uri: z.string(),
+    albumImages: z.array(
+      z.object({
+        url: z.string(),
+        width: z.number(),
+        height: z.number(),
+      }),
+    ),
+  })
+  .array()
 
 async function getRecommendationsBasedOnGenres(
   spotifyClient: SpotifyApi,
@@ -78,16 +93,9 @@ export async function POST(req: NextRequest) {
       }),
     )
     const res = recommendations.map((recommendation) => {
-      return recommendation.tracks.map((track) => {
-        return {
-          id: track.id,
-          uri: track.uri,
-          name: track.name,
-          albumImages: track.album.images,
-        }
-      })
+      return recommendation.tracks
     })
-    const selectedTracks: { id: string; name: string; albumImages: Image[] }[] = []
+    const selectedTracks: Track[] = []
     const trackIds = new Set<string>()
 
     for (const subArray of res) {
