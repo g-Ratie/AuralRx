@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json(selectedTracks)
+    return NextResponse.json({ selectedTracks })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to generate recommendations' }, { status: 500 })
