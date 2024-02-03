@@ -4,7 +4,7 @@ import { RunnableSequence } from 'langchain/runnables'
 import { getMockFitnessData } from '../fitness/googleFitMock'
 import { getFitnessData } from '../fitness/googleFitService'
 import { fitnessOutputSchema } from './fitnessOutputSchema'
-import { geminiModel, geminiModelForAnalysis } from './geminiModel'
+import { geminiModelForAnalysis } from './geminiModel'
 import {
   ExtendedRecommendationParams,
   recommendationSchemaWithSeedGenres,
@@ -18,9 +18,9 @@ export const chatUtils = {
     const parser = StructuredOutputParser.fromZodSchema(recommendationSchemaWithSeedGenres)
     const chain = RunnableSequence.from([
       PromptTemplate.fromTemplate(
-        '{format_parser}\n以下のヘルスケアデータに基づき生成された活動の説明から、その場面に適した曲をレコメンドするためのパラメータを設定し、指定した形式のJSONで返してください.\n{explain}',
+        '{format_parser}\n以下のヘルスケアデータに基づき生成された活動の説明から、その場面に適した曲をレコメンドするためのパラメータ・コメントを設定し、指定した形式のJSONで返してください.\n{explain}',
       ),
-      geminiModel,
+      geminiModelForAnalysis,
       parser,
     ])
     const result = await chain.invoke({
