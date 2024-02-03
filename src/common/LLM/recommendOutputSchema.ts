@@ -19,6 +19,11 @@ const baseRecommendationSchema = z.object({
     .min(0)
     .max(1)
     .describe('曲のポジティブさを示す指標, 0から1の範囲で指定し, この値に近い曲が選択される'),
+  comment: z
+    .string()
+    .describe(
+      'どんな曲をイメージしてこれらのパラメータを指定したかについてのコメントを書いてください。なお、activity_inferenceの内容を入れる必要はない\n例:{推定される活動}をしているようですので、{どんな曲かの説明}な曲をおすすめしました。',
+    ),
 })
 
 export const recommendationSchemaWithSeedGenres = baseRecommendationSchema.extend({

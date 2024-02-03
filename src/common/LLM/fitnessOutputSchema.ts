@@ -3,14 +3,14 @@ import { z } from 'zod'
 const heartRateSummarySchema = z
   .object({
     average: z.number().describe('平均心拍数'),
-    min: z.number().describe('最低心拍数'),
-    max: z.number().describe('最高心拍数'),
+    min: z.number().describe('最低心拍数,データが一つの場合は平均心拍数が最大心拍数となります。'),
+    max: z.number().describe('最高心拍数,データが一つの場合は平均心拍数が最小心拍数となります。'),
   })
   .nullable()
 
 const stepsSummarySchema = z
   .object({
-    total: z.number().describe('総歩数'),
+    total: z.number().describe('総歩数,データが存在しない場合は0'),
   })
   .nullable()
 
