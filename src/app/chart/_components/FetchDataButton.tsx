@@ -2,42 +2,39 @@
 import { PostFitnessAPIRequestBody } from '@/app/api/fitness/route'
 import { FitnessOutput } from '@/common/LLM/fitnessOutputSchema'
 import { extendedRecommendationSchema } from '@/common/LLM/recommendOutputSchema'
-import { BASE_URL } from '@/common/envValues'
 import { Button } from '@/components/ui/Button'
+import { z } from 'zod'
 
-const FetchDataButton = ({ fitnessData }: { fitnessData: FitnessOutput }) => {
-  async function fetchRecommendedData(fitnessData: FitnessOutput, seedTrack: string[] | null) {
+type Props = {
+  fitnessData: FitnessOutput
+}
+
+export const FetchDataButton = ({ fitnessData }: Props) => {
+  const fetchRecommendedData = async (fitnessData: FitnessOutput, seedTrack: string[] | null) => {
+    const reqBody: PostFitnessAPIRequestBody = {
+      activityAnalysis: fitnessData.activityAnalysis,
+      seedTrack: seedTrack,
+    }
+    const res = await fetch('/api/fitness', {
+      method: 'POST',
+      body: JSON.stringify(reqBody),
+      headers: { 'Content-Type': 'application/json' },
+    })
+
+    if (!res.ok) return null
+    const data = await res.json()
+
     try {
-      const requestBody: PostFitnessAPIRequestBody = {
-        activityAnalysis: fitnessData.activityAnalysis,
-        seedTrack: seedTrack,
-      }
-      const response = await fetch(`${BASE_URL}/api/fitness`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' },
-      })
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-      const responseData = await response.json()
-      const parsedRecommendedData = responseData.map((item: unknown) =>
-        extendedRecommendationSchema.parse(item),
-      )
-      return parsedRecommendedData
+      return z.array(extendedRecommendationSchema).parse(data)
     } catch (error) {
+      console.error('Error fetching recommended data:', error)
       return null
     }
   }
+
   const handleClick = async () => {
-    try {
-      const recommendedData = await fetchRecommendedData(fitnessData, null)
-    } catch (error) {
-      console.error('Error fetching recommended data:', error)
-    }
+    fetchRecommendedData(fitnessData, null)
   }
 
   return <Button onClick={handleClick} label="レコメンドを取得" />
 }
-
-export default FetchDataButton

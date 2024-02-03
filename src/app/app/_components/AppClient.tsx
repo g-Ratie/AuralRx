@@ -32,7 +32,11 @@ export const AppClient = () => {
       <section>
         <Title title="プレイリストを生成" number="3" />
         <p>ヘルスケア情報と普段聞いている曲からあなたにあった曲を生成します。</p>
-        <Link href="/app/play">
+        <Link
+          href={`/app/play${
+            selectedPlaylistId === undefined ? '' : `?playlist=${selectedPlaylistId}`
+          }`}
+        >
           <Button
             label="プレイリストを生成"
             Icon={IconMusicBolt}
